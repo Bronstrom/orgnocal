@@ -1,0 +1,169 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  userId            Int      @id @default(autoincrement())
+  cognitoId         String   @unique
+  username          String   @unique
+  email             String   @unique
+  roles             String[]
+  profilePictureUrl String?
+
+  // TODO: Consider better relational design for projects and orgs - I believe these are both m-n
+  projects    Project[]
+  orgs        Org[]
+  attachments Attachment[]
+  comments    Comment[]
+
+  adminProjects Project[] @relation("Admin")
+
+  authoredTasks Task[] @relation("TaskAuthor")
+  assignedTasks Task[] @relation("TaskAssignee")
+
+  createdTasks      Task[]    @relation("TaskCreator")
+  latestEditedTasks Task[]    @relation("LatestTaskEditedBy")
+  commentsDeleted   Comment[] @relation("CommentDeletor")
+  projectsCreated   Project[] @relation("ProjectCreator")
+  orgsCreated       Org[]     @relation("OrgCreator")
+}
+
+model Org {
+  id                   Int     @id @default(autoincrement())
+  orgName              String
+  description          String?
+  productOwnerUserId   Int?
+  projectManagerUserId Int?
+
+  projects        Project[]
+  users           User[]
+  createdByUserId Int?
+  createdBy       User?     @relation("OrgCreator", fields: [createdByUserId], references: [userId], onDelete: SetNull)
+}
+
+model Project {
+  id          Int       @id @default(autoincrement())
+  name        String
+  archived    Boolean
+  description String?
+  startDate   DateTime?
+  endDate     DateTime?
+
+  tasks           Task[]
+  users           User[] // Users not associated with orgs
+  adminUserId     Int?
+  admin           User?         @relation("Admin", fields: [adminUserId], references: [userId], onDelete: SetNull)
+  createdByUserId Int?
+  createdBy       User?         @relation("ProjectCreator", fields: [createdByUserId], references: [userId], onDelete: SetNull)
+  orgs            Org[]
+  projectViews    ProjectView[]
+  taskLayers      TaskLayer[]
+}
+
+model ProjectView {
+  id           Int     @id @default(autoincrement())
+  name         String
+  viewType     String
+  projectIndex Int?
+  // Delimited list of tasks.
+  // TODO: If there get to be a lot of tasks, this will get expensive to make changes to. Consider redesign if need but
+  // at the very least put limits on how many tasks per project
+  taskOrder    String?
+  filters      String?
+
+  projectId Int
+  // onDelete of a project, the project view will also be deleted
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Task {
+  id             Int       @id @default(autoincrement())
+  title          String
+  postedDate     DateTime
+  archived       Boolean
+  description    String?
+  status         String?
+  priority       String?
+  tags           String?
+  latestEditDate DateTime?
+  startDate      DateTime?
+  endDate        DateTime?
+  size           String?
+  urls           String[]
+
+  // Parent/child task relationship (1-M self-relation)
+  parentTaskId Int?
+  parentTask   Task?  @relation("TaskHierarchy", fields: [parentTaskId], references: [id])
+  nestedTasks  Task[] @relation("TaskHierarchy")
+
+  projectId Int?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  taskLayerId Int?
+  taskLayer   TaskLayer? @relation(fields: [taskLayerId], references: [id], onDelete: SetNull)
+
+  createdByUserId Int?
+  createdBy       User? @relation("TaskCreator", fields: [createdByUserId], references: [userId], onDelete: SetNull)
+
+  latestEditedByUserId Int?
+  latestEditedBy       User? @relation("LatestTaskEditedBy", fields: [latestEditedByUserId], references: [userId], onDelete: SetNull)
+
+  authorUserId Int?
+  author       User? @relation("TaskAuthor", fields: [authorUserId], references: [userId], onDelete: SetNull)
+
+  assignedUserId Int?
+  assignee       User? @relation("TaskAssignee", fields: [assignedUserId], references: [userId], onDelete: SetNull) // TODO: Consider multi-select
+
+  attachments Attachment[]
+  comments    Comment[]
+}
+
+model TaskLayer {
+  id    Int    @id @default(autoincrement())
+  name  String
+  tasks Task[]
+
+  projectId Int
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model Attachment {
+  id       Int     @id @default(autoincrement())
+  fileURL  String
+  fileName String?
+
+  taskId Int?
+  task   Task? @relation(fields: [taskId], references: [id], onDelete: SetNull)
+
+  uploadedById Int
+  uploadedBy   User @relation(fields: [uploadedById], references: [userId], onDelete: Cascade)
+}
+
+model Comment {
+  id             Int       @id @default(autoincrement())
+  text           String
+  postedDate     DateTime
+  latestEditDate DateTime?
+
+  taskId Int
+  task   Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  userId Int?
+  user   User? @relation(fields: [userId], references: [userId], onDelete: SetNull)
+
+  // Soft delete
+  deletedAt       DateTime?
+  deletedByUserId Int?
+  deletedBy       User?     @relation("CommentDeletor", fields: [deletedByUserId], references: [userId], onDelete: SetNull)
+}

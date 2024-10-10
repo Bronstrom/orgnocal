@@ -1,0 +1,53 @@
+[
+  {
+    "id": 1,
+    "text": "Eh, what's up doc?",
+    "taskId": 1,
+    "userId": 1,
+    "postedDate": "2023-12-31T00:00:00Z"
+  },
+  {
+    "id": 2,
+    "text": "Youuu're deththpicable!",
+    "taskId": 1,
+    "userId": 2,
+    "postedDate": "2024-01-01T00:00:00Z"
+  },
+  {
+    "id": 3,
+    "text": "That's all, folks!",
+    "taskId": 3,
+    "userId": 3,
+    "postedDate": "2024-03-06T00:00:00Z"
+  },
+  {
+    "id": 4,
+    "text": "Thufferin' Thuccotash!",
+    "taskId": 4,
+    "userId": 7,
+    "postedDate": "2024-04-10T00:00:00Z"
+  },
+  {
+    "id": 5,
+    "text": "I tawt I taw a puddy tat!",
+    "taskId": 4,
+    "userId": 8,
+    "postedDate": "2024-04-11T00:00:00Z"
+  },
+  {
+    "id": 6,
+    "text": "I did! I did taw a puddy tat!",
+    "taskId": 4,
+    "userId": 8,
+    "postedDate": "2024-04-12T00:00:00Z",
+    "deletedAt": "2024-04-13T00:00:00Z",
+    "deletedByUserId": 7
+  },
+  {
+    "id": 7,
+    "text": "TAZ HUNGRY!",
+    "taskId": 6,
+    "userId": 11,
+    "postedDate": "2024-06-20T00:00:00Z"
+  }
+]

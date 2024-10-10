@@ -1,0 +1,77 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*
+*::before
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+.app {
+  height: 100%;
+  width: 100%;
+  @apply text-sm;
+}
+
+/* Use browser's dark mode features */
+.dark {
+  color-scheme: dark
+}
+
+
+/* COMPONENT SURGICAL STYLING */
+
+/* Root selector changes for full-calendar */
+:root {
+  --fc-page-bg-color: bg-white dark:bg-dark-secondary;
+}
+
+/* Gantt chart styling */
+/* TODO: Common CSS colors? */
+.gantt ._3_ygE {
+  @apply rounded-tl-md border border-r-0 border-[#e6e4e4] dark:border-stroke-dark;
+}
+.gantt ._2eZzQ {
+  @apply border-[#e6e4e4] dark:border-stroke-dark;
+}
+.gantt ._2dZTy {
+  @apply fill-white dark:fill-dark-secondary;
+}
+.gantt ._2dZTy:nth-child(even) {
+  @apply fill-[#f5f5f5] dark:fill-dark-tertiary;
+}
+.gantt ._35nLX {
+  @apply fill-white stroke-[#e6e4e4] dark:fill-dark-secondary dark:stroke-stroke-dark
+}
+.gantt ._9w8d5 {
+  @apply fill-[#333] dark:fill-white;
+}
+.gantt ._34SS0 {
+  @apply bg-white dark:bg-dark-secondary;
+}
+.gantt ._34SS0:nth-of-type(even) {
+  @apply bg-[#f5f5f5] dark:bg-dark-tertiary;
+}
+.gantt ._RuwuK,
+.gantt ._3rUKi,
+.gantt ._1rLuZ {
+  @apply stroke-[#e6e4e4] dark:stroke-stroke-dark;
+}
+.gantt ._3ZbQT {
+  @apply border-l-0 border-[#e6e4e4] dark:border-stroke-dark;
+}
+.gantt ._3T42e {
+  @apply bg-white dark:bg-dark-bg;
+}
+.gantt ._29NTg {
+  @apply dark:text-neutral-500;
+}
+
+::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}

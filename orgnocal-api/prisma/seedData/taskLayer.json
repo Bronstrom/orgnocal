@@ -1,0 +1,17 @@
+[
+  {
+    "id": 1,
+    "name": "Epic",
+    "projectId": 1
+  },
+  {
+    "id": 2,
+    "name": "Story",
+    "projectId": 1
+  },
+  {
+    "id": 3,
+    "name": "Task",
+    "projectId": 1
+  }
+]

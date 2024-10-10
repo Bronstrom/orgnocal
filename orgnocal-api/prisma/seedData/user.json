@@ -1,0 +1,183 @@
+[
+  {
+    "userId": 1,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee01",
+    "username": "Bugs Bunny",
+    "profilePictureUrl": "profile1.jpg",
+    "email": "bugsbunny@email.com",
+    "roles": [ "comedian", "inventor", "carrot-chewer" ]
+  },
+  {
+    "userId": 2,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee02",
+    "username": "Daffy Duck",
+    "profilePictureUrl": "profile2.jpg",
+    "email": "daffyduck@email.com",
+    "roles": [ "comedian", "teacher", "manager" ]
+  },
+  {
+    "userId": 3,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee03",
+    "username": "Porky Pig",
+    "profilePictureUrl": "profile3.jpg",
+    "email": "porkypig@email.com",
+    "roles": [ "banker" ]
+  },
+  {
+    "userId": 4,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee04",
+    "username": "Elmer Fudd",
+    "profilePictureUrl": "profile4.jpg",
+    "email": "elmerfudd@email.com",
+    "roles": [ "hunter" ]
+  },
+  {
+    "userId": 5,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee05",
+    "username": "Yosemite Sam",
+    "profilePictureUrl": "profile5.jpg",
+    "email": "yosemitesam@email.com",
+    "roles": [ "cowboy", "pirate" ]
+  },
+  {
+    "userId": 6,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee06",
+    "username": "Marvin the Martian",
+    "profilePictureUrl": "profile6.jpg",
+    "email": "marvinthemartian@email.com",
+    "roles": [ "martian", "planet-destroyer" ]
+  },
+  {
+    "userId": 7,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee07",
+    "username": "Sylvester J Pussycat Sr",
+    "profilePictureUrl": "profile1.jpg",
+    "email": "sylvesterthecat@email.com"
+  },
+  {
+    "userId": 8,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee08",
+    "username": "Tweety Bird",
+    "profilePictureUrl": "profile2.jpg",
+    "email": "tweetybird@email.com"
+  },
+  {
+    "userId": 9,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee09",
+    "username": "Foghorn Leghorn",
+    "profilePictureUrl": "profile3.jpg",
+    "email": "foghornleghorn@email.com"
+  },
+  {
+    "userId": 10,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee10",
+    "username": "Speedy Gonzales",
+    "profilePictureUrl": "profile4.jpg",
+    "email": "speedygonzales@email.com"
+  },
+  {
+    "userId": 11,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee11",
+    "username": "Tasmanian Devil",
+    "profilePictureUrl": "profile5.jpg",
+    "email": "taz@email.com"
+  },
+  {
+    "userId": 12,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee12",
+    "username": "Lola Bunny",
+    "profilePictureUrl": "profile6.jpg",
+    "email": "lolabunny@email.com"
+  },
+  {
+    "userId": 13,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee13",
+    "username": "Wile E Coyote",
+    "profilePictureUrl": "profile1.jpg",
+    "email": "wileecoyote@email.com"
+  },
+  {
+    "userId": 14,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee14",
+    "username": "Road Runner",
+    "profilePictureUrl": "profile2.jpg",
+    "email": "roadrunner@email.com"
+  },
+  {
+    "userId": 15,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee15",
+    "username": "Granny",
+    "profilePictureUrl": "profile3.jpg",
+    "email": "granny@email.com"
+  },
+  {
+    "userId": 16,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee16",
+    "username": "Pepe le Pew",
+    "profilePictureUrl": "profile4.jpg",
+    "email": "pepelepew@email.com"
+  },
+  {
+    "userId": 17,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee17",
+    "username": "Penelope Pussycat",
+    "profilePictureUrl": "profile5.jpg",
+    "email": "penelopepussycat@email.com"
+  },
+  {
+    "userId": 18,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee18",
+    "username": "Hector the Bulldog",
+    "profilePictureUrl": "profile6.jpg",
+    "email": "hectorthebulldog@email.com"
+  },
+  {
+    "userId": 19,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee19",
+    "username": "Michigan J. Frog",
+    "profilePictureUrl": "profile1.jpg",
+    "email": "michiganjfrog@email.com"
+  },
+  {
+    "userId": 20,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee20",
+    "username": "Beaky Buzzard",
+    "profilePictureUrl": "profile2.jpg",
+    "email": "beakybuzzard@email.com"
+  },
+  {
+    "userId": 21,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee21",
+    "username": "Witch Hazel",
+    "profilePictureUrl": "profile3.jpg",
+    "email": "witchhazel@email.com"
+  },
+  {
+    "userId": 22,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee22",
+    "username": "K-9",
+    "profilePictureUrl": "profile4.jpg",
+    "email": "k9@email.com"
+  },
+  {
+    "userId": 23,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee23",
+    "username": "Henery Hawk",
+    "profilePictureUrl": "profile5.jpg",
+    "email": "heneryhawk@email.com"
+  },
+  {
+    "userId": 24,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee24",
+    "username": "Petunia Pig",
+    "profilePictureUrl": "profile6.jpg",
+    "email": "petuniapig@email.com"
+  },
+  {
+    "userId": 25,
+    "cognitoId": "aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeee25",
+    "username": "Barnyard Dawg",
+    "profilePictureUrl": "profile1.jpg",
+    "email": "barnyarddawg@email.com"
+  }
+]

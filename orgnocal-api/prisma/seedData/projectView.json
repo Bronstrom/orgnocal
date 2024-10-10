@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Board",
+    "viewType": "board",
+    "projectId": 1
+  },
+  {
+    "id": 2,
+    "name": "Hierarchy",
+    "viewType": "hierarchy",
+    "projectId": 1
+  },
+  {
+    "id": 3,
+    "name": "Tile",
+    "viewType": "tile",
+    "projectId": 1
+  },
+  {
+    "id": 4,
+    "name": "Dashboard",
+    "viewType": "dashboard",
+    "projectId": 2
+  },
+  {
+    "id": 5,
+    "name": "Calendar",
+    "viewType": "calendar",
+    "projectId": 2
+  },
+  {
+    "id": 6,
+    "name": "Gantt",
+    "viewType": "gantt",
+    "projectId": 3
+  }
+]

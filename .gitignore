@@ -1,0 +1,12 @@
+# Centralized environment variables for front-end and back-end to keep out of version control
+.env
+.env*.local
+
+orgnocal-api/node_modules/
+orgnocal-api/dist/
+orgnocal-api/.env
+
+orgnocal-app/node_modules/
+orgnocal-app/dist/
+orgnocal-app/.env
+orgnocal-app/.next

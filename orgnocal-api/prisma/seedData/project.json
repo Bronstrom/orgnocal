@@ -1,0 +1,36 @@
+[
+  {
+    "id": 1,
+    "name": "Carrot Catapult",
+    "archived": false,
+    "startDate": "2023-10-01T00:00:00Z",
+    "endDate": "2024-12-31T00:00:00Z",
+    "createdByUserId": 1
+  },
+  {
+    "id": 2,
+    "name": "Treasure Hunt",
+    "archived": false,
+    "description": "A rainforest temple exploration for treasure.",
+    "startDate": "2023-01-01T00:00:00Z",
+    "endDate": "2023-12-31T00:00:00Z",
+    "createdByUserId": 2
+  },
+  {
+    "id": 3,
+    "name": "Porky's Banking Planner",
+    "archived": false,
+    "startDate": "2024-10-01T00:00:00Z",
+    "endDate": "2025-04-25T00:00:00Z",
+    "createdByUserId": 3
+  },
+  {
+    "id": 4,
+    "name": "Wabbit Season",
+    "archived": false,
+    "description": "Shhh. Be vewy, vewy quiet. I'm hunting wabbits.",
+    "startDate": "2024-01-01T00:00:00Z",
+    "endDate": "2024-04-15T00:00:00Z",
+    "createdByUserId": 4
+  }
+]

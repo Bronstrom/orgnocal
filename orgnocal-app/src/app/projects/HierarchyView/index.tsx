@@ -610,7 +610,7 @@ const DraggableTask = ({
                       ))}
                     </div>
                   </div>
-                  <button className="dark:text-nuetral-500 flex h-6 w-4 flex-shrink-0 items-center justify-center">
+                  <button className="dark:text-neutral-500 flex h-6 w-4 flex-shrink-0 items-center justify-center">
                     <SubMenuDropdown
                       icon={<IconDotsVertical size={18} />}
                       direction="left"

@@ -1,10 +1,7 @@
 import { PriorityTag } from "@/app/projects/BoardView";
 import { Task } from "@/state/api";
 import { format } from "date-fns";
-import {
-  IconDoor,
-  IconDotsVertical,
-} from "@tabler/icons-react";
+import { IconDoor, IconDotsVertical } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -43,7 +40,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
             ))}
           </div>
         </div>
-        <button className="dark:text-nuetral-500 flex h-6 w-4 flex-shrink-0 items-center justify-center">
+        <button className="dark:text-neutral-500 flex h-6 w-4 flex-shrink-0 items-center justify-center">
           <SubMenuDropdown
             icon={<IconDotsVertical size={18} />}
             direction="left"
@@ -64,12 +61,6 @@ const TaskCard = ({ task }: TaskCardProps) => {
         <h4 className="text-md font-bold dark:text-white">
           {task.title} (ID: {task.id})
         </h4>
-        {/* Task Size */}
-        {typeof task.size === "string" && (
-          <div className="text-xs font-semibold dark:text-white">
-            Size: {task.size}
-          </div>
-        )}
       </div>
       {/* Dates */}
       <div className="text-xs text-gray-500 dark:text-neutral-500">
@@ -77,6 +68,7 @@ const TaskCard = ({ task }: TaskCardProps) => {
         {formattedEndDate && <span>{formattedEndDate}</span>}
       </div>
       <div className="text-sm text-gray-600 dark:text-neutral-500 pt-3">
+        {typeof task.size === "string" && <p>Size: {task.size}</p>}
         <p>
           <strong>Description:</strong> {task.description}
         </p>

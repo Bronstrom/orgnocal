@@ -14,7 +14,10 @@ import { format } from "date-fns";
 import Image from "next/image";
 import Header from "@/components/Header";
 import Link from "next/link";
-import { SubMenuButton, SubMenuDropdown } from "@/components/dropdown/SubMenuDropdown";
+import {
+  SubMenuButton,
+  SubMenuDropdown,
+} from "@/components/dropdown/SubMenuDropdown";
 import { CircularProgress } from "@mui/material";
 
 // TODO: Props can be reused from the different views
@@ -76,7 +79,12 @@ const BoardView = ({
   };
 
   // TODO: Create reusable component for this
-  if (isLoading) return <div><CircularProgress sx={{ margin: "20px" }} /></div>;
+  if (isLoading)
+    return (
+      <div>
+        <CircularProgress sx={{ margin: "20px" }} />
+      </div>
+    );
   if (error) return <div>An error occurred while retrieving tasks</div>;
 
   return (
@@ -239,13 +247,8 @@ const Task = ({ task }: TaskProps) => {
               ))}
             </div>
           </div>
-          <button className="dark:text-nuetral-500 flex h-6 w-4 flex-shrink-0 items-center justify-center">
-            <SubMenuDropdown
-              icon={
-                <IconDots size={18} />
-              }
-              direction="left"
-            >
+          <button className="dark:text-neutral-500 flex h-6 w-4 flex-shrink-0 items-center justify-center">
+            <SubMenuDropdown icon={<IconDots size={18} />} direction="left">
               <Link href={`/tasks/${task.id}`}>
                 <SubMenuButton
                   onClick={() => {}}
@@ -260,18 +263,13 @@ const Task = ({ task }: TaskProps) => {
         <div className="my-3 flex justify-between">
           {/* Title */}
           <h4 className="text-md font-bold dark:text-white">{task.title}</h4>
-          {/* Task Size */}
-          {typeof task.size === "string" && (
-            <div className="text-xs font-semibold dark:text-white">
-              Size: {task.size}
-            </div>
-          )}
         </div>
         {/* Dates */}
         <div className="text-xs text-gray-500 dark:text-neutral-500">
           {formattedStartDate && <span>{formattedStartDate} - </span>}
           {formattedEndDate && <span>{formattedEndDate}</span>}
         </div>
+        <p>{typeof task.size === "string" && <p>Size: {task.size}</p>}</p>
         <p className="text-sm text-gray-600 dark:text-neutral-500">
           {task.description}
         </p>
@@ -308,7 +306,6 @@ const Task = ({ task }: TaskProps) => {
               />
             )}
           </div>
-          <Link href={`/tasks/${task.id}`}>Task Link</Link>
           {/* Comments */}
           <div className="flex items-center text-gray-500 dark:text-neutral-500">
             <IconMessage size={20} />

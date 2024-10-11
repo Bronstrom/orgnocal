@@ -48,7 +48,7 @@ async function main() {
       for (const data of jsonData) {
         await model.create({ data })
       }
-      console.error(`Seeded model: ${modelName} with data from: ${filename}`)
+      console.log(`Seeded model: ${modelName} with data from: ${filename}`)
     } catch (error) {
       console.error(`Error seeding data from model: ${modelName} - ${error}`)
     }

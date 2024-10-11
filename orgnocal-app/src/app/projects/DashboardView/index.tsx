@@ -97,7 +97,7 @@ const DashboardView = ({ id }: DashboardViewProps) => {
       const status =
         task.status === Status.Completed
           ? "Completed"
-          : task?.endDate && task.endDate < currentDate && task?.status !== Status.Completed
+          : task?.endDate && task.endDate < currentDate /* TODO: Ensure this isn't needed: && task.status !== Status.Completed */
             ? "Overdue"
             : "Active";
       acc[status as Status] = (acc[status as Status] || 0) + 1;

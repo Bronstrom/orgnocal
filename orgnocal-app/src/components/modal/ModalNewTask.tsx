@@ -179,7 +179,8 @@ const ModalNewTask = ({
           assignee={undefined}
           selectedAssignedUserId={assignedUserId}
           setSelectedAssignedUserId={setAssignedUserId}
-          selectedProjectId={projectId}
+          // TODO: Ensure projectId 0 works correctly here
+          selectedProjectId={projectId || 0}
           isEditable={true}
         />
         {projectId === null && (

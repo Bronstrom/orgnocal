@@ -28,7 +28,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { formInputStyles, formLabelStyles, formSelectStyles } from "@/lib/utils";
+import {
+  formInputStyles,
+  formLabelStyles,
+  formSelectStyles,
+} from "@/lib/utils";
+import TaskHeader from "./TaskHeader";
 
 type TaskViewProps = {
   task: Task;
@@ -55,7 +60,7 @@ const TaskView = ({ task }: TaskViewProps) => {
   const [title, setTitle] = useState(task.title);
   const [taskAuthorUserId, setTaskAuthorUserId] = useState(task.authorUserId);
   // Optional fields
-  const [description, setDescription] = useState(task.description);
+  const [description, setDescription] = useState(task.description || "");
   const [addUrl, setAddUrl] = useState("");
   const [urls, setUrls] = useState<string[]>(task.urls || []);
   const [status, setStatus] = useState(task.status);
@@ -63,7 +68,7 @@ const TaskView = ({ task }: TaskViewProps) => {
   // TODO: May need to adjust if I change to endDate
   const [endDate, setEndDate] = useState(task.endDate);
   const [priority, setPriority] = useState(task.priority);
-  const [tags, setTags] = useState(task.tags);
+  const [tags, setTags] = useState(task.tags || "");
   const [taskAssignedUserId, setTaskAssignedUserId] = useState(
     task.assignedUserId,
   );
@@ -76,13 +81,13 @@ const TaskView = ({ task }: TaskViewProps) => {
     setTitle(task.title);
     setTaskAuthorUserId(task.authorUserId);
 
-    setDescription(task.description);
+    setDescription(task.description || "");
     setUrls(task.urls || []);
     setStatus(task.status);
     setStartDate(task.startDate);
     setEndDate(task.endDate);
     setPriority(task.priority);
-    setTags(task.tags);
+    setTags(task.tags || "");
     setTaskAssignedUserId(task.assignedUserId);
 
     setTaskProject(
@@ -105,8 +110,8 @@ const TaskView = ({ task }: TaskViewProps) => {
   }
 
   function textFieldViewable(
-    input,
-    setInput,
+    input: string,
+    setInput: (input: string) => void,
     label = "",
     noInputProvided = "",
     subtitle = "",
@@ -135,8 +140,8 @@ const TaskView = ({ task }: TaskViewProps) => {
   }
 
   function textAreaViewable(
-    input,
-    setInput,
+    input: string,
+    setInput: (input: string) => void,
     label = "",
     noInputProvided = "",
     subtitle = "",
@@ -163,7 +168,7 @@ const TaskView = ({ task }: TaskViewProps) => {
     );
   }
 
-  function displayViewableDates(startDate, endDate) {
+  function displayViewableDates(startDate?: string, endDate?: string) {
     if (!startDate && !endDate) {
       return <>~ No dates set ~</>;
     } else {
@@ -177,7 +182,12 @@ const TaskView = ({ task }: TaskViewProps) => {
     }
   }
 
-  function inputDateViewable(startDate, setStartDate, endDate, setEndDate) {
+  function inputDateViewable(
+    setStartDate: (startDate?: string) => void,
+    setEndDate: (endDate?: string) => void,
+    startDate?: string,
+    endDate?: string,
+  ) {
     return (
       <div>
         <strong>Start & End Date:</strong>{" "}
@@ -189,13 +199,13 @@ const TaskView = ({ task }: TaskViewProps) => {
             <input
               type="date"
               className={formInputStyles}
-              value={format(new Date(startDate), "yyyy-MM-dd")}
+              value={format(new Date(startDate || ""), "yyyy-MM-dd")}
               onChange={(event) => setStartDate(event.target.value)}
             />
             <input
               type="date"
               className={formInputStyles}
-              value={format(new Date(endDate), "yyyy-MM-dd")}
+              value={format(new Date(endDate || ""), "yyyy-MM-dd")}
               onChange={(event) => setEndDate(event.target.value)}
             />
           </div>
@@ -341,7 +351,7 @@ const TaskView = ({ task }: TaskViewProps) => {
         {/* Left column */}
         <div className="col-span-2 p-10">
           {/* TODO: Make custom header for this component and project title? */}
-          <Header
+          <TaskHeader
             title={textFieldViewable(title, setTitle)}
             // TODO: Make this a dropdown sepecific to "my projects", otherwise display project name, maybe seperate component
             subtitle={
@@ -360,8 +370,8 @@ const TaskView = ({ task }: TaskViewProps) => {
                   <>
                     <select
                       className={formSelectStyles}
-                      // TODO: Figure out better solution of null for value
-                      value={taskProject ? taskProject.id : null}
+                      // TODO: Ensure null for project and 0 for value works well here
+                      value={taskProject ? taskProject.id : 0}
                       onChange={(event) => {
                         let tempFindProject = projects
                           ? projects.find(
@@ -369,18 +379,20 @@ const TaskView = ({ task }: TaskViewProps) => {
                                 project.id === Number(event.target.value),
                             )
                           : null;
-                        setTaskProject(tempFindProject);
+                        setTaskProject(tempFindProject || null);
                       }}
                       disabled={
-                        task.nestedTasks?.length > 0 || task.parentTaskId
+                        (task.nestedTasks && task.nestedTasks.length > 0) ||
+                        Boolean(task.parentTaskId)
                       }
                     >
-                      <option value={null}>No Project Assigned</option>
+                      <option value={0}>No Project Assigned</option>
                       {projects?.map((project) => (
                         <option value={project.id}>{project.name}</option>
                       ))}
                     </select>
-                    {(task.nestedTasks?.length > 0 || task.parentTaskId) &&
+                    {((task.nestedTasks && task.nestedTasks.length > 0) ||
+                      Boolean(task.parentTaskId)) &&
                       "Can't move with parent/child relationship reliance"}
                   </>
                 )}
@@ -487,7 +499,7 @@ const TaskView = ({ task }: TaskViewProps) => {
                     <Link
                       href={"https://" + url || "http://" + url}
                       target="_blank"
-                      className="text-blue-primary flex items-center hover:text-blue-600"
+                      className="flex items-center text-blue-primary hover:text-blue-600"
                     >
                       {url}
                       <IconExternalLink className="ml-1 h-3 w-3" />
@@ -534,7 +546,9 @@ const TaskView = ({ task }: TaskViewProps) => {
           </div>
         </div>
         {/* Right column */}
-        <div className={`p-10 ${task.archived ? "bg-purple-400 dark:bg-purple-900" : "bg-gray-200 dark:bg-gray-800"}`}>
+        <div
+          className={`p-10 ${task.archived ? "bg-purple-400 dark:bg-purple-900" : "bg-gray-200 dark:bg-gray-800"}`}
+        >
           <div className="grid gap-5">
             <UserAssignmentDropdownViewable
               author={task.author}
@@ -543,7 +557,8 @@ const TaskView = ({ task }: TaskViewProps) => {
               assignee={task.assignee}
               selectedAssignedUserId={taskAssignedUserId}
               setSelectedAssignedUserId={setTaskAssignedUserId}
-              selectedProjectId={taskProject?.id}
+              // TODO: Handle 0 case here correctly
+              selectedProjectId={taskProject?.id || 0}
               isEditable={isEditable}
             />
             <div className="flex items-center gap-3">
@@ -595,7 +610,7 @@ const TaskView = ({ task }: TaskViewProps) => {
                 </>
               )}
             </div>
-            {inputDateViewable(startDate, setStartDate, endDate, setEndDate)}
+            {inputDateViewable(setStartDate, setEndDate, startDate, endDate)}
             {textFieldViewable(
               tags,
               setTags,

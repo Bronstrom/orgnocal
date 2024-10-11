@@ -3,8 +3,8 @@ import Modal from "@/components/modal/Modal";
 import Image from "next/image";
 
 type ModalEditProfilePictureUrlProps = {
-  profilePictureUrl?: string;
-  setProfilePictureUrl: (profilePictureUrl?: string) => void;
+  profilePictureUrl: string;
+  setProfilePictureUrl: (profilePictureUrl: string) => void;
   isOpen: boolean;
   onClose: () => void;
 };

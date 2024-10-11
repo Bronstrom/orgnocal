@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import FullCalendar, {
-  DateSelectArg,
-  EventContentArg,
-} from "@fullcalendar/react";
+import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -11,6 +8,7 @@ import Header from "@/components/Header";
 import { IconCalendarWeek } from "@tabler/icons-react";
 import { useGetTasksQuery } from "@/state/api";
 import { useRouter } from "next/navigation";
+import { DateSelectArg, EventContentArg } from "@fullcalendar/core/index.js";
 
 const views = {
   timeGridDay: {
@@ -69,7 +67,8 @@ const CalendarView = ({
     setStartAndEndDates([selectInfo.startStr, selectInfo.endStr]);
   };
 
-  async function handleEventSelection(eventContent: EventContentArg) {
+  // TODO: Replace any - could be EventContentArg
+  async function handleEventSelection(eventContent: any) {
     eventContent.jsEvent.preventDefault();
     router.push(`/tasks/${eventContent.event.id}`);
   }
@@ -77,7 +76,7 @@ const CalendarView = ({
   // TODO: This could be in utils & replace any type
   function selectObjectTaskListReplacementProps(...props: any) {
     return function (object: any) {
-      const condensedObject = {};
+      const condensedObject: any = {};
       props.forEach((nameReplacement: any) => {
         condensedObject[nameReplacement[1]] = object[nameReplacement[0]];
       });

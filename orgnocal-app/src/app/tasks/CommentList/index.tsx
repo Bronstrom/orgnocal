@@ -59,7 +59,7 @@ const CommentList = ({
     commentDeletedAt?: string,
   ) => {
     // Recover
-    let formattedSoftDeleteDate = null; // TODO: Ensure these are undefined
+    let formattedSoftDeleteDate = undefined; // TODO: Ensure these are undefined
     let deletedByUserId;
     // Otherwise soft delete comment
     if (!commentDeletedAt) {
@@ -93,7 +93,7 @@ const CommentList = ({
     return isLoadingCreateComment || isLoadingSoftDeleteRecoverComment;
   }
 
-  const unSortedComments = [...comments];
+  const unSortedComments = !comments ? undefined : [...comments];
 
   return (
     <div>
@@ -105,7 +105,7 @@ const CommentList = ({
       </div>
       {unSortedComments
         ?.sort((commentA, commentB) =>
-          commentA.postedDate > commentB.postedDate ? 1 : -1,
+          commentA.postedDate && commentB.postedDate && commentA.postedDate > commentB.postedDate ? 1 : -1,
         )
         .map((comment: Comment) => (
           <div

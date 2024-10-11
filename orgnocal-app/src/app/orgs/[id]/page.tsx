@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
-import { useGetOrgQuery } from "@/state/api";
+import { Project, useGetOrgQuery } from "@/state/api";
 import { useAppSelector } from "@/app/redux";
 import React, { useState } from "react";
 import {
@@ -67,11 +67,11 @@ const Org = ({ params }: OrgProps) => {
       width: 200,
       renderCell: (params) => (
         <div>
-          {params.id === org.productOwnerUserId && "Project Owner (PO)"}
-          {params.id === org.productOwnerUserId &&
-            params.id === org.projectManagerUserId &&
+          {params.id === params.row.productOwnerUserId && "Project Owner (PO)"}
+          {params.id === params.row.productOwnerUserId &&
+            params.id === params.row.projectManagerUserId &&
             ", "}
-          {params.id === org.projectManagerUserId && "Project Manager (PM)"}
+          {params.id === params.row.projectManagerUserId && "Project Manager (PM)"}
         </div>
       ),
     },
@@ -89,11 +89,11 @@ const Org = ({ params }: OrgProps) => {
   if (isError || !org)
     return <div>An error occurred while retrieving orgs</div>;
 
-  // TODO: This could be in utils
-  function selectObjectListProps(...props) {
-    return function (object) {
-      const condensedObject = {};
-      props.forEach((name) => {
+  // TODO: This could be in utils and remove any types
+  function selectObjectListProps(...props: any) {
+    return function (object: any) {
+      const condensedObject: any = {};
+      props.forEach((name: any) => {
         condensedObject[name] = object[name];
       });
 
@@ -136,7 +136,7 @@ const Org = ({ params }: OrgProps) => {
           ? "No projects under this Org"
           : unSortedProjects
               .sort((projectA, projectB) =>
-                projectA.endDate > projectB.endDate ? 1 : -1,
+                projectA.endDate && projectB.endDate && projectA.endDate > projectB.endDate ? 1 : -1,
               )
               .map((project, index) => <ProjectOrgCard project={project} index={index} />)}
       </div>
@@ -160,7 +160,12 @@ const Org = ({ params }: OrgProps) => {
   );
 };
 
-const ProjectOrgCard = ({ project, index }) => {
+type ProjectOrgCardProps = {
+  project: Project
+  index: number
+}
+
+const ProjectOrgCard = ({ project, index }: ProjectOrgCardProps) => {
   return (
     // TODO: Alternate coloring of these items
     <Link href={`/projects/${project.id}`}>

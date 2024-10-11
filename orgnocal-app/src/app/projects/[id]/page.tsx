@@ -22,7 +22,7 @@ const Project = ({ params }: ProjectProps) => {
   const [activeTab, setActiveTab] = useState("");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
   const [newTaskStatus, setNewTaskStatus] = useState("");
-  const [startAndEndDates, setStartAndEndDates] = useState([]);
+  const [startAndEndDates, setStartAndEndDates] = useState<string[] | undefined>([]);
   const [taskSearchQuery, setTaskSearchQuery] = useState("");
 
   function displayActiveView() {

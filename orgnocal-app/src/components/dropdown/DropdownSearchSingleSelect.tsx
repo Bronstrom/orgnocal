@@ -56,7 +56,7 @@ const DropdownSearchSingleSelect = ({
             disabled={restrictedSelectedItems?.includes(id)}
           >
             <label
-              for={`${itemType}-${id}-selection-item`}
+              htmlFor={`${itemType}-${id}-selection-item`}
               className={`ms-2 w-full rounded text-sm font-medium ${selectedItem === id ? "text-blue-600" : "text-gray-900 dark:text-gray-300"}`}
             >
               <div className="flex">
@@ -107,7 +107,7 @@ const DropdownSearchSingleSelect = ({
         >
           <div className="p-3">
             {/* TODO: Search requirement should be similar to search page - with 2/3 chars minimum */}
-            <label for="input-dropdown-search" className="sr-only">
+            <label htmlFor="input-dropdown-search" className="sr-only">
               Search {itemType}
             </label>
             <div className="relative">

@@ -54,7 +54,7 @@ const Settings = () => {
   // String helper to get org names
   const orgStr = user?.orgs?.map((org, index) =>
     index > 0 ? ", " + org.orgName : org.orgName,
-  );
+  )
 
   useEffect(() => {
     if (user) {
@@ -250,7 +250,8 @@ const Settings = () => {
                 "Please type as a comma (',') seperated list",
               )}
               {textFieldViewable(
-                orgStr,
+                // TODO: Convert this better
+                String(orgStr),
                 () => {},
                 "Org(s)",
                 "~ No org(s) assigned ~",

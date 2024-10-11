@@ -70,8 +70,9 @@ const DropdownSearchButtonUsersOrgs = ({
             className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:ring-offset-gray-700 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-700"
             disabled={isUsers && restrictedSelectedUsers?.includes(id)}
           />
+          {/* TODO: Swapped for for htmlFor - Ensure htmlFor is correct */}
           <label
-            for={`${itemType}-${id}-checkbox-item`}
+            htmlFor={`${itemType}-${id}-checkbox-item`}
             className="ms-2 w-full rounded text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             <div className="flex">
@@ -120,7 +121,7 @@ const DropdownSearchButtonUsersOrgs = ({
         >
           <div className="p-3">
             {/* TODO: Search requirement should be similar to search page - with 2/3 chars minimum */}
-            <label for="input-dropdown-search" className="sr-only">
+            <label htmlFor="input-dropdown-search" className="sr-only">
               Search {itemType}
             </label>
             <div className="relative">
@@ -152,7 +153,7 @@ const DropdownSearchButtonUsersOrgs = ({
               .slice(0, MAX_COUNT_RESULTS)
               .map((user: User) =>
                 checkboxItem(
-                  user.userId,
+                  String(user.userId),
                   user.username,
                   selectedUsers,
                   setSelectedUsers,
@@ -170,7 +171,7 @@ const DropdownSearchButtonUsersOrgs = ({
               .slice(0, MAX_COUNT_RESULTS)
               .map((org: Org) =>
                 checkboxItem(
-                  org.id,
+                  String(org.id),
                   org.orgName,
                   selectedOrgs,
                   setSelectedOrgs,

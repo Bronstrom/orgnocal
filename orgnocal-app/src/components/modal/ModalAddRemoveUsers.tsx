@@ -39,18 +39,18 @@ const ModalAddRemoveUsers = ({
   const [selectedOrgs, setSelectedOrgs] = useState<string[]>([]);
 
   const fullSelectedOrgs = orgs?.filter((org) =>
-    selectedOrgs.includes(org.id)
+    selectedOrgs.includes(String(org.id))
   );
   const restrictedUsers = fullSelectedOrgs?.map((orgs) =>
-    orgs.users?.map((orgUser) => orgUser.userId)
+    orgs.users?.map((orgUser) => String(orgUser.userId))
   );
 
   useEffect(() => {
     if (project) {
       setSelectedOrgs(
-        project.orgs.map((org) => org.id) || []
+        project.orgs?.map((org) => String(org.id)) || []
       );
-      setSelectedUsers(project.users.map((user) => user.userId) || []);
+      setSelectedUsers(project.users?.map((user) => String(user.userId)) || []);
     } else {
       resetAddRemoveUserOrgFields();
     }
@@ -63,9 +63,9 @@ const ModalAddRemoveUsers = ({
   }
 
   // TODO: Util function and remove duplicates
-  function combineArrays(arrays: string[]) {
+  function combineArrays(arrays?: string[][]) {
     let tempArray: string[] = [];
-    arrays.forEach((array: any) => (tempArray = [...tempArray, ...array]));
+    arrays?.forEach((array: any) => (tempArray = [...tempArray, ...array]));
     return tempArray;
   }
 

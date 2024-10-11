@@ -22,8 +22,9 @@ const OwnerManagerAssignmentDropdown = ({
   return (
     <div className={"col"}>
       <div className={"p-2"}>
+        {/* TODO: Ensure selectedItem empty string works occordingly */}
         <DropdownSearchSingleSelect
-          selectedItem={selectedProductOwnerUserId}
+          selectedItem={selectedProductOwnerUserId || ""}
           setSelectedItem={setSelectedProductOwnerUserId}
           items={users}
           buttonLabel={"Select Product Owner (PO)"}
@@ -31,8 +32,9 @@ const OwnerManagerAssignmentDropdown = ({
         />
       </div>
       <div className={"p-2"}>
+        {/* TODO: Ensure selectedItem empty string works occordingly */}
         <DropdownSearchSingleSelect
-          selectedItem={selectedProjectManagerUserId}
+          selectedItem={selectedProjectManagerUserId || ""}
           setSelectedItem={setSelectedProjectManagerUserId}
           items={users}
           buttonLabel={"Select Project Manager (PM)"}

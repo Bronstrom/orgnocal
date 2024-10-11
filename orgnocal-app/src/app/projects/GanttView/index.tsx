@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { useGetTasksQuery } from "@/state/api";
+import { Status, useGetTasksQuery } from "@/state/api";
 import { useAppSelector } from "@/app/redux";
 import { DisplayOption, Gantt, ViewMode } from "gantt-task-react";
 // Fix gantt alignment issue
@@ -42,6 +42,8 @@ const GanttView = ({ id, isArchivedSelected, taskSearchQuery, setIsModalNewTaskO
         start: new Date(task?.startDate as string) || new Date(),
         end: new Date(task?.endDate as string) || new Date(),
         isDisabled: false,
+        // TODO: Determine if better way to determine status
+        progress: task.status === Status.Completed ? 100 : 0,
       })) || []
     );
   }, [tasks]);

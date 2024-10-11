@@ -33,10 +33,10 @@ const UserAssignmentDropdownViewable = ({
 
   // TODO: Can viewUser be removed and just use taskAssignedUserId - or just use the taskAssignedUser or something
   function userAssignmentDropdownViewable(
-    viewUser,
-    taskAssignedUserId,
-    setTaskAssignedUserId,
-    userLabel
+    setTaskAssignedUserId: (taskAssignedUserId: number) => void,
+    userLabel: string,
+    viewUser?: User,
+    taskAssignedUserId?: number
   ) {
     return (
       <div className="flex items-center gap-x-3">
@@ -62,19 +62,20 @@ const UserAssignmentDropdownViewable = ({
         ) : (
           <select
             className={formSelectStyles}
-            // TODO: Figure out better solution of null for value
-            value={taskAssignedUserId || null}
+            // TODO: Ensure value of 0 works occordingly
+            value={taskAssignedUserId || 0}
             onChange={(event) =>
               setTaskAssignedUserId(Number(event.target.value))
             }
           >
-            <option value={null}>~ No {userLabel} Choosen ~</option>
+            <option value={0}>~ No {userLabel} Choosen ~</option>
             {project?.orgs?.map((org) =>
               org.users?.map((user) => (
                 // Display user's name and display org when move than one org for the project
                 <option value={user.userId}>
                   {user.username}{" "}
-                  {project?.orgs?.length > 1 &&
+                  {project.orgs &&
+                    project.orgs.length > 1 &&
                     "(" + org.orgName + ")"}
                 </option>
               ))
@@ -93,16 +94,16 @@ const UserAssignmentDropdownViewable = ({
   return (
     <div>
       {userAssignmentDropdownViewable(
-        author,
-        selectedAuthorUserId,
         setSelectedAuthorUserId,
-        "Author"
+        "Author",
+        author,
+        selectedAuthorUserId
       )}
       {userAssignmentDropdownViewable(
-        assignee,
-        selectedAssignedUserId,
         setSelectedAssignedUserId,
-        "Assignee"
+        "Assignee",
+        assignee,
+        selectedAssignedUserId
       )}
     </div>
   );

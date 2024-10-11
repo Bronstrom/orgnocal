@@ -141,7 +141,7 @@ export interface Task {
   latestEditedBy?: User
   author?: User;
   assignee?: User;
-  taskLayer: Task;
+  taskLayer: TaskLayer;
   taskLayerId: number;
   comments?: Comment[];
   attachments?: Attachment[];

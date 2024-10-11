@@ -10,7 +10,7 @@ import {
 import Modal from "@/components/modal/Modal";
 
 type ModalEditViewsProps = {
-  project: Project | null;
+  project: Project;
   isOpen: boolean;
   onClose: () => void;
 };
@@ -55,7 +55,7 @@ const ModalEditViews = ({ project, isOpen, onClose }: ModalEditViewsProps) => {
     // TODO: Add drag and drop support?
     <Modal isOpen={isOpen} onClose={onClose} name={"Edit Project Views"}>
       <p>Disclaimer: By removing a view you will not lose any project data. You can remove and re-add to change the order of views.</p>
-      <h1 class="pt-5">Current Views</h1>
+      <h1>Current Views</h1>
       <div className="items-center p-5">
         {!project?.projectViews || project.projectViews.length < 1
           ? <div className="text-gray-400 dark:text-gray-600">No views currently in project</div>
@@ -77,14 +77,14 @@ const ModalEditViews = ({ project, isOpen, onClose }: ModalEditViewsProps) => {
       </div>
       <h1>Views to Add</h1>
       <div className="items-center p-5">
-        {unusedViews.length < 1
+        {!(unusedViews && unusedViews.length > 0)
           ? <div className="text-gray-400 dark:text-gray-600">All views are being used</div>
           : unusedViews.map((viewType) => (
               <div className="flex justify-between items-center rounded border p-4 w-full shadow hover:bg-gray-100 dark:hover:bg-gray-600">
                 {viewType}
                 <button
                   className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
-                  onClick={() => {handleAddView(project?.id, viewType, projectViewIndex)}}
+                  onClick={() => {handleAddView(project.id, viewType, projectViewIndex)}}
                 >
                   Add
                 </button>

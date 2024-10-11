@@ -53,7 +53,7 @@ const ModalEditProject = ({
         project?.endDate ? format(new Date(project.endDate), "yyyy-MM-dd") : ""
       );
       // TODO: Remove - not used
-      setViews(project.projectViews || []);
+      setViews(project.projectViews.map((projectView) => projectView.viewType) || []);
     } else {
       resetEditProjectFields();
     }
@@ -150,7 +150,7 @@ const ModalEditProject = ({
             className="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-500 dark:bg-gray-600 dark:ring-offset-gray-700 dark:focus:ring-blue-600 dark:focus:ring-offset-gray-700"
           />
           <label
-            for={`${viewType}-checkbox-item`}
+            htmlFor={`${viewType}-checkbox-item`}
             className="ms-2 w-full py-3 text-sm font-medium text-gray-900 dark:text-gray-300"
           >
             {viewType}

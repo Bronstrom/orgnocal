@@ -36,27 +36,25 @@ const ModalEditOrg = ({ org, isOpen, onClose }: ModalEditOrgProps) => {
   // TODO: If getting to a lot validation use library
   const [orgName, setOrgName] = useState("");
   const [description, setDescription] = useState("");
-  const [productOwner, setProductOwner] = useState(undefined);
-  const [projectManager, setProjectManager] = useState(undefined);
+  const [productOwner, setProductOwner] = useState<string | undefined>(undefined);
+  const [projectManager, setProjectManager] = useState<string | undefined>(undefined);
   const createdByUserId = 1; // TODO: AUTHENTIFICATION: Replace after authentification
-  // These items are always selected
-  const restrictedSelectedItems = [createdByUserId];
 
   const [isShowingSearchDropdown, setIsShowingSearchDropdown] = useState(false);
-  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
 
   // Get username array to display near user selection
   const selectedUsernames = users
-    ?.filter((user) => selectedUsers.includes(user.userId))
+    ?.filter((user) => selectedUsers.includes(String(user.userId)))
     .map((user) => user.username);
 
   useEffect(() => {
     if (org) {
       setOrgName(org.orgName || "");
       setDescription(org.description || "");
-      setProductOwner(org.productOwnerUserId || undefined);
-      setProjectManager(org.projectManagerUserId || undefined);
-      setSelectedUsers(org.users.map((user) => user.userId) || []);
+      setProductOwner(String(org.productOwnerUserId) || undefined);
+      setProjectManager(String(org.projectManagerUserId) || undefined);
+      setSelectedUsers(org.users.map((user) => String(user.userId)) || []);
     } else {
       resetEditOrgFields();
     }
@@ -68,6 +66,20 @@ const ModalEditOrg = ({ org, isOpen, onClose }: ModalEditOrgProps) => {
     setProductOwner(undefined);
     setProjectManager(undefined);
     setSelectedUsers([]);
+  }
+
+  function determineRestrictedItems() {
+    let restrictedItems = []
+    if (createdByUserId) {
+      restrictedItems.push(String(createdByUserId))
+    }
+    if (productOwner) {
+      restrictedItems.push(productOwner)
+    }
+    if (productOwner) {
+      restrictedItems.push(productOwner)
+    }
+    return restrictedItems
   }
 
   // Used to add important users to arrays
@@ -93,7 +105,7 @@ const ModalEditOrg = ({ org, isOpen, onClose }: ModalEditOrgProps) => {
         users: mergeArrays(selectedUsers, [
           productOwner,
           projectManager,
-          createdByUserId,
+          String(createdByUserId),
         ]),
       });
     }
@@ -104,13 +116,13 @@ const ModalEditOrg = ({ org, isOpen, onClose }: ModalEditOrgProps) => {
         partialOrg: {
           orgName,
           description,
-          productOwnerUserId: productOwner,
-          projectManagerUserId: projectManager,
+          productOwnerUserId: Number(productOwner),
+          projectManagerUserId: Number(projectManager),
         },
         users: mergeArrays(selectedUsers, [
           productOwner,
           projectManager,
-          createdByUserId,
+          String(createdByUserId),
         ]),
       });
     }
@@ -202,7 +214,7 @@ const ModalEditOrg = ({ org, isOpen, onClose }: ModalEditOrgProps) => {
           items={users}
           buttonLabel={`Add ${org ? "/ Remove " : ""}Users`}
           itemType={"Users"}
-          restrictedSelectedItems={[...restrictedSelectedItems, productOwner, projectManager]}
+          restrictedSelectedItems={determineRestrictedItems()}
         />
         {org && (
           <button

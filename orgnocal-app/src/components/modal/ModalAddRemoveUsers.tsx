@@ -21,7 +21,7 @@ const ModalAddRemoveUsers = ({
   isOpen,
   onClose,
 }: ModalAddRemoveUsersProps) => {
-  const [updateProjectUsers, { isLoading: isLoadingUpdateProjectUsers }] =
+  const [updateProjectUsers] =
     useUpdateProjectUsersMutation();
   const {
     data: users,

@@ -3,7 +3,6 @@ import {
   Project,
   useCreateProjectMutation,
   useDeleteProjectMutation,
-  useDeleteProjectViewMutation,
   useUpdateProjectMutation,
 } from "@/state/api";
 import { format, formatISO } from "date-fns";
@@ -53,7 +52,9 @@ const ModalEditProject = ({
         project?.endDate ? format(new Date(project.endDate), "yyyy-MM-dd") : ""
       );
       // TODO: Remove - not used
-      setViews(project.projectViews.map((projectView) => projectView.viewType) || []);
+      setViews(
+        project.projectViews.map((projectView) => projectView.viewType) || []
+      );
     } else {
       resetEditProjectFields();
     }
@@ -71,7 +72,7 @@ const ModalEditProject = ({
     event: React.ChangeEvent<HTMLInputElement>,
     viewType: string
   ) {
-    let checked = event.target.checked;
+    const checked = event.target.checked;
     if (checked) {
       setViews([...views, viewType]);
     } else {

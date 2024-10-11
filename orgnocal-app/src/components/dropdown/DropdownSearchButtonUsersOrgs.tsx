@@ -40,7 +40,7 @@ const DropdownSearchButtonUsersOrgs = ({
     selectedItems: string[],
     setSelectedItems: (selectedItems: string[]) => void
   ) {
-    let checked = event.target.checked;
+    const checked = event.target.checked;
     // TODO: Ensure manager can't remove themselves
     if (checked) {
       setSelectedItems([...selectedItems, item]);

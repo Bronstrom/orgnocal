@@ -29,8 +29,12 @@ const ModalNewTask = ({
   const [tags, setTags] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-  const [authorUserId, setAuthorUserId] = useState<number | undefined>(undefined);
-  const [assignedUserId, setAssignedUserId] = useState<number | undefined>(undefined);
+  const [authorUserId, setAuthorUserId] = useState<number | undefined>(
+    undefined
+  );
+  const [assignedUserId, setAssignedUserId] = useState<number | undefined>(
+    undefined
+  );
   const [userInputProjectId, setUserInputProjectId] = useState("");
 
   useEffect(() => {

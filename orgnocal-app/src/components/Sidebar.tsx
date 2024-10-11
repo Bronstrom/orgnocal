@@ -32,22 +32,12 @@ const Sidebar = () => {
   const isAdminIconUser = false;
 
   // Grab project data from api
-  const {
-    data: projects,
-    isLoading: isLoadingProjects,
-    isError: isErrorProjects,
-  } = useGetProjectsQuery();
-  const {
-    data: orgs,
-    isLoading: isLoadingOrgs,
-    isError: isErrorOrgs,
-  } = useGetOrgsQuery();
+  const { data: projects } = useGetProjectsQuery();
+  const { data: orgs } = useGetOrgsQuery();
 
-  const dispatch = useDispatch();
   const isSidebarCollapsed = useAppSelector(
     (state) => state.global.isSidebarCollapsed
   );
-  const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
 
   // TODO: Error out?
 
@@ -80,14 +70,22 @@ const Sidebar = () => {
             />
             <SidebarLink icon={IconSearch} label="Search" href="/search" />
             {/* TODO: Detemine better route */}
-            <SidebarLink icon={IconSettings} label="Settings" href="/settings" />
+            <SidebarLink
+              icon={IconSettings}
+              label="Settings"
+              href="/settings"
+            />
             {/* TODO: Make these admin screen that only can be accessed by the admin IconUser */}
           </div>
           <div className="my-10 border-y-[0.1rem] border-gray-200 dark:border-gray-700">
             {/* TODO: AUTHENTIFICATION - Swap this out for IconUser is admin */}
             {isAdminIconUser && (
               <>
-                <SidebarLink icon={IconUser} label="IconUsers" href="/IconUsers" />
+                <SidebarLink
+                  icon={IconUser}
+                  label="IconUsers"
+                  href="/IconUsers"
+                />
                 <SidebarLink icon={IconUsers} label="Orgs" href="/orgs" />
               </>
             )}

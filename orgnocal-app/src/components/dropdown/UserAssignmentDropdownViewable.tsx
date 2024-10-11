@@ -25,11 +25,9 @@ const UserAssignmentDropdownViewable = ({
   isEditable,
 }: UserAssignmentDropdownViewableProps) => {
   // TODO: Not a big fan of this name
-  const {
-    data: project,
-    isLoading: isLoadingProject,
-    isError: isErrorProject,
-  } = useGetProjectQuery({ projectId: selectedProjectId });
+  const { data: project } = useGetProjectQuery({
+    projectId: selectedProjectId,
+  });
 
   // TODO: Can viewUser be removed and just use taskAssignedUserId - or just use the taskAssignedUser or something
   function userAssignmentDropdownViewable(
@@ -72,7 +70,7 @@ const UserAssignmentDropdownViewable = ({
             {project?.orgs?.map((org) =>
               org.users?.map((user) => (
                 // Display user's name and display org when move than one org for the project
-                <option value={user.userId}>
+                <option key={"org-user_" + user.userId} value={user.userId}>
                   {user.username}{" "}
                   {project.orgs &&
                     project.orgs.length > 1 &&
@@ -83,7 +81,9 @@ const UserAssignmentDropdownViewable = ({
             {/* TODO: When going through users ensure they don't exist in the
               orgs above - otherwise value will not be unique */}
             {project?.users?.map((user) => (
-              <option value={user.userId}>{user.username}</option>
+              <option key={"project-user_" + user.userId} value={user.userId}>
+                {user.username}
+              </option>
             ))}
           </select>
         )}

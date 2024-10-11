@@ -34,6 +34,7 @@ const ModalEditProfilePictureUrl = ({
       <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
         {imageFileNames.map((imageFileName) => (
           <Image
+            key={imageFileName}
             src={`/${imageFileName}`}
             alt={imageFileName}
             width={100}

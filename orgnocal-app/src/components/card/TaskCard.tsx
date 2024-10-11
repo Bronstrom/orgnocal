@@ -25,8 +25,6 @@ const TaskCard = ({ task }: TaskCardProps) => {
   const formattedEndDate = task.endDate
     ? format(new Date(task.endDate), "P")
     : "";
-  // Display number of comments
-  const numberOfComments = (task.comments && task.comments.length) || 0;
 
   return (
     // TODO: Make common styling Card component

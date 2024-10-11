@@ -21,23 +21,20 @@ type ModalEditOrgProps = {
 
 const ModalEditOrg = ({ org, isOpen, onClose }: ModalEditOrgProps) => {
   const router = useRouter();
-  const {
-    data: users,
-    isLoading: isLoadingUsersQuery,
-    isError,
-  } = useGetUsersQuery();
-  const [createOrg, { isLoading: isLoadingCreateOrg }] =
-    useCreateOrgMutation();
-  const [updateOrg, { isLoading: isLoadingUpdateOrg }] =
-    useUpdateOrgMutation();
-  const [deleteOrg, { isLoading: isLoadingDeleteOrg }] =
-    useDeleteOrgMutation();
+  const { data: users, isLoading: isLoadingUsersQuery } = useGetUsersQuery();
+  const [createOrg, { isLoading: isLoadingCreateOrg }] = useCreateOrgMutation();
+  const [updateOrg, { isLoading: isLoadingUpdateOrg }] = useUpdateOrgMutation();
+  const [deleteOrg, { isLoading: isLoadingDeleteOrg }] = useDeleteOrgMutation();
   const [isModalDeleteOpen, setIsModalDeleteOpen] = useState(false);
   // TODO: If getting to a lot validation use library
   const [orgName, setOrgName] = useState("");
   const [description, setDescription] = useState("");
-  const [productOwner, setProductOwner] = useState<string | undefined>(undefined);
-  const [projectManager, setProjectManager] = useState<string | undefined>(undefined);
+  const [productOwner, setProductOwner] = useState<string | undefined>(
+    undefined
+  );
+  const [projectManager, setProjectManager] = useState<string | undefined>(
+    undefined
+  );
   const createdByUserId = 1; // TODO: AUTHENTIFICATION: Replace after authentification
 
   const [isShowingSearchDropdown, setIsShowingSearchDropdown] = useState(false);
@@ -69,17 +66,17 @@ const ModalEditOrg = ({ org, isOpen, onClose }: ModalEditOrgProps) => {
   }
 
   function determineRestrictedItems() {
-    let restrictedItems = []
+    const restrictedItems = [];
     if (createdByUserId) {
-      restrictedItems.push(String(createdByUserId))
+      restrictedItems.push(String(createdByUserId));
     }
     if (productOwner) {
-      restrictedItems.push(productOwner)
+      restrictedItems.push(productOwner);
     }
     if (productOwner) {
-      restrictedItems.push(productOwner)
+      restrictedItems.push(productOwner);
     }
-    return restrictedItems
+    return restrictedItems;
   }
 
   // Used to add important users to arrays
@@ -164,9 +161,7 @@ const ModalEditOrg = ({ org, isOpen, onClose }: ModalEditOrgProps) => {
         <ModalDelete
           type={"Org"}
           name={org.orgName}
-          message={
-            `Org data will be lost once deleted. Projects will remain intact. You must enter the org name: "${org.orgName}" to delete the org.`
-          }
+          message={`Org data will be lost once deleted. Projects will remain intact. You must enter the org name: "${org.orgName}" to delete the org.`}
           isOpen={isModalDeleteOpen}
           confirmAction={() => handleDeleteOrg()}
           onClose={() => setIsModalDeleteOpen(false)}

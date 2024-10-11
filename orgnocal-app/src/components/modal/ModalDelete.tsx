@@ -37,7 +37,7 @@ const ModalDelete = ({
   return (
     <Modal isOpen={isOpen} onClose={onClose} name={"Delete " + type}>
       <div>
-        Are you sure you want to delete {type}: "{name}"? {message}
+        Are you sure you want to delete {type}: &quot;{name}&quot;? {message}
       </div>
       {requiredField && (
         <div className="p-8">

@@ -64,7 +64,6 @@ const Project = ({ params }: ProjectProps) => {
             id={id}
             isArchivedSelected={isArchivedSelected}
             taskSearchQuery={taskSearchQuery}
-            setIsModalNewTaskOpen={setIsModalNewTaskOpen}
           />
         );
       case "Table":

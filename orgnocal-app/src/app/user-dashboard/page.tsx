@@ -60,11 +60,7 @@ const taskColumns: GridColDef[] = [
 const UserDashboard = () => {
   // TODO: AUTHENTICATE - get user details and replace userId
   const userId = 1;
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useGetUserQuery(
+  const { data: user } = useGetUserQuery(
     {
       userId: userId || 0,
     },
@@ -225,33 +221,37 @@ const UserDashboard = () => {
                 <p>Add some projects to view My Task Priority Distribution.</p>
               </div>
             </div>
-          ) : (<ResponsiveContainer width="100%" height={300}>
-            <BarChart data={taskPriorityDistribution} layout="vertical">
-              <CartesianGrid
-                strokeDasharray="3 3"
-                stroke={
-                  isDarkMode
-                    ? barChartColorsDark.barGrid
-                    : barChartColorsLight.barGrid
-                }
-              />
-              <XAxis type="number" />
-              <YAxis type="category" dataKey="name" />
-              <Tooltip
-                contentStyle={{
-                  width: "min-content",
-                  height: "min-content",
-                }}
-              />
-              <Legend />
-              <Bar
-                dataKey="count"
-                fill={
-                  isDarkMode ? barChartColorsDark.bar : barChartColorsLight.bar
-                }
-              />
-            </BarChart>
-          </ResponsiveContainer>)}
+          ) : (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={taskPriorityDistribution} layout="vertical">
+                <CartesianGrid
+                  strokeDasharray="3 3"
+                  stroke={
+                    isDarkMode
+                      ? barChartColorsDark.barGrid
+                      : barChartColorsLight.barGrid
+                  }
+                />
+                <XAxis type="number" />
+                <YAxis type="category" dataKey="name" />
+                <Tooltip
+                  contentStyle={{
+                    width: "min-content",
+                    height: "min-content",
+                  }}
+                />
+                <Legend />
+                <Bar
+                  dataKey="count"
+                  fill={
+                    isDarkMode
+                      ? barChartColorsDark.bar
+                      : barChartColorsLight.bar
+                  }
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
         </div>
       </div>
     </div>

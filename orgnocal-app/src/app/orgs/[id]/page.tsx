@@ -71,7 +71,8 @@ const Org = ({ params }: OrgProps) => {
           {params.id === params.row.productOwnerUserId &&
             params.id === params.row.projectManagerUserId &&
             ", "}
-          {params.id === params.row.projectManagerUserId && "Project Manager (PM)"}
+          {params.id === params.row.projectManagerUserId &&
+            "Project Manager (PM)"}
         </div>
       ),
     },
@@ -136,9 +137,15 @@ const Org = ({ params }: OrgProps) => {
           ? "No projects under this Org"
           : unSortedProjects
               .sort((projectA, projectB) =>
-                projectA.endDate && projectB.endDate && projectA.endDate > projectB.endDate ? 1 : -1,
+                projectA.endDate &&
+                projectB.endDate &&
+                projectA.endDate > projectB.endDate
+                  ? 1
+                  : -1,
               )
-              .map((project, index) => <ProjectOrgCard project={project} index={index} />)}
+              .map((project, index) => (
+                <ProjectOrgCard key={project.id} project={project} index={index} />
+              ))}
       </div>
       {/* TODO: Common H3 Header that can be reused*/}
       <h3 className="mb-2 mt-4 font-semibold text-gray-900 dark:text-white">
@@ -161,18 +168,22 @@ const Org = ({ params }: OrgProps) => {
 };
 
 type ProjectOrgCardProps = {
-  project: Project
-  index: number
-}
+  project: Project;
+  index: number;
+};
 
 const ProjectOrgCard = ({ project, index }: ProjectOrgCardProps) => {
   return (
     // TODO: Alternate coloring of these items
     <Link href={`/projects/${project.id}`}>
-      <div className={`relative mb-3 h-full rounded-lg shadow-2xl bg-white bg-gradient-to-tr ${index % 3 === 0 ? "from-blue-primary to-turquoise-tertiary" : index % 3 === 1 ? "from-red-300 to-yellow-300" : "from-purple-300 to-purple-200"} p-4 shadow dark:bg-dark-secondary dark:text-white overflow-hidden`}>
-        <img
+      <div
+        className={`relative mb-3 h-full rounded-lg bg-white bg-gradient-to-tr shadow-2xl ${index % 3 === 0 ? "from-blue-primary to-turquoise-tertiary" : index % 3 === 1 ? "from-red-300 to-yellow-300" : "from-purple-300 to-purple-200"} overflow-hidden p-4 shadow dark:bg-dark-secondary dark:text-white`}
+      >
+         {/* TODO: Replace image */}
+        <Image
           className="absolute inset-0 h-full w-full object-cover mix-blend-overlay"
           src="/profile2.jpg"
+          alt="Profile"
         />
         {/* TODO: Create reusable component for these */}
         <p>

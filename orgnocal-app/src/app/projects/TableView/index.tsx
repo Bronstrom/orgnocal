@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import { Task, useGetTasksQuery } from "@/state/api";
+import { useGetTasksQuery } from "@/state/api";
 import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";

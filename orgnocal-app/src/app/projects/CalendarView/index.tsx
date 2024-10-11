@@ -51,8 +51,6 @@ const CalendarView = ({
 }: CalendarViewProps) => {
   const {
     data: tasks,
-    isLoading,
-    error,
   } = useGetTasksQuery({
     projectId: Number(id),
     isArchived: isArchivedSelected,

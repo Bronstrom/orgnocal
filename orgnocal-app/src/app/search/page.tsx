@@ -54,13 +54,13 @@ const Search = () => {
         {isError && <p>An error occurred when retrieving search results.</p>}
         {!isLoading && !isError && searchResults && (
           <div>
-            Results for keyword term: "{searchTerm}"
+            Results for keyword term: &quot;{searchTerm}&quot;
             {searchResults.tasks && searchResults.tasks?.length > 0 && (
               <h4 className="text-md py-5 font-bold dark:text-white">Tasks</h4>
             )}
             {searchResults.tasks?.map((task) => (
-              <Link href={`/tasks/${task.id}`}>
-                <TaskCard key={task.id} task={task} />
+              <Link key={task.id} href={`/tasks/${task.id}`}>
+                <TaskCard task={task} />
               </Link>
             ))}
             {searchResults.projects && searchResults.projects?.length > 0 && (
@@ -69,16 +69,16 @@ const Search = () => {
               </h4>
             )}
             {searchResults.projects?.map((project) => (
-              <Link href={`/projects/${project.id}`}>
-                <ProjectCard key={project.id} project={project} />
+              <Link key={project.id} href={`/projects/${project.id}`}>
+                <ProjectCard project={project} />
               </Link>
             ))}
             {searchResults.orgs && searchResults.orgs?.length > 0 && (
               <h4 className="text-md py-5 font-bold dark:text-white">Orgs</h4>
             )}
             {searchResults.orgs?.map((org) => (
-              <Link href={`/orgs/${org.id}`}>
-                <OrgCard key={org.id} org={org} />
+              <Link key={org.id} href={`/orgs/${org.id}`}>
+                <OrgCard org={org} />
               </Link>
             ))}
             {searchResults.users && searchResults.users?.length > 0 && (

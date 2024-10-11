@@ -20,7 +20,10 @@ import ModalAddRemoveUsers from "@/components/modal/ModalAddRemoveUsers";
 import ModalEditViews from "@/components/modal/ModalEditViews";
 import { ProjectView, useGetProjectQuery } from "@/state/api";
 import { format } from "date-fns";
-import { SubMenuButton, SubMenuDropdown } from "@/components/dropdown/SubMenuDropdown";
+import {
+  SubMenuButton,
+  SubMenuDropdown,
+} from "@/components/dropdown/SubMenuDropdown";
 import { CircularProgress, Tooltip } from "@mui/material";
 
 type ProjectHeaderProps = {
@@ -64,7 +67,12 @@ const ProjectHeader = ({
   }, [project]);
 
   // TODO: Error out here?
-  if (isLoading) return <div><CircularProgress sx={{ margin: "20px" }} /></div>;
+  if (isLoading)
+    return (
+      <div>
+        <CircularProgress sx={{ margin: "20px" }} />
+      </div>
+    );
   if (isError || !project)
     return <div>An error occurred while retrieving the project</div>;
 
@@ -100,7 +108,10 @@ const ProjectHeader = ({
               project.description
           }
           rightAlignedComponent={
-            <SubMenuDropdown icon={<IconDotsVertical size={36} />} direction="right">
+            <SubMenuDropdown
+              icon={<IconDotsVertical size={36} />}
+              direction="right"
+            >
               <SubMenuButton
                 onClick={() => {
                   setIsEditable(true);
@@ -129,6 +140,7 @@ const ProjectHeader = ({
         <div className="flex flex-1 items-center gap-2 md:gap-4">
           {project.projectViews.map((view: ProjectView) => (
             <TabButton
+              key={view.id}
               name={view.name}
               icon={determineIconFromViewType(view.viewType)}
               setActiveTab={setActiveTab}
@@ -173,7 +185,9 @@ const ProjectHeader = ({
                   className={`rounded-md border py-1 pl-10 pr-4 focus:outline-none dark:border-dark-secondary dark:bg-dark-secondary ${taskSearchQuery ? "dark:text-white" : "text-gray-400 dark:text-gray-500"}`}
                   onChange={(event) => setTaskSearchQuery(event.target.value)}
                 />
-                <IconFilter className={`absolute left-3 top-2 h-4 w-4 ${taskSearchQuery ? "text-royal-secondary" : "text-gray-400 dark:text-neutral-500"}`} />
+                <IconFilter
+                  className={`absolute left-3 top-2 h-4 w-4 ${taskSearchQuery ? "text-royal-secondary" : "text-gray-400 dark:text-neutral-500"}`}
+                />
               </div>
             </>
           )}

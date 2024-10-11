@@ -1,5 +1,4 @@
 import { PriorityTag } from "@/app/projects/BoardView";
-import Header from "@/components/Header";
 import ModalDelete from "@/components/modal/ModalDelete";
 import UserAssignmentDropdownViewable from "@/components/dropdown/UserAssignmentDropdownViewable";
 import {
@@ -33,7 +32,7 @@ import {
   formLabelStyles,
   formSelectStyles,
 } from "@/lib/utils";
-import TaskHeader from "./TaskHeader";
+import TaskHeader from "../../../components/TaskHeader";
 
 type TaskViewProps = {
   task: Task;
@@ -41,11 +40,7 @@ type TaskViewProps = {
 
 const TaskView = ({ task }: TaskViewProps) => {
   const router = useRouter();
-  const {
-    data: projects,
-    isLoading: isLoadingProjects,
-    isError: isErrorProjects,
-  } = useGetProjectsQuery();
+  const { data: projects } = useGetProjectsQuery();
   const [updateTask, { isLoading: isCreateTaskLoading }] =
     useUpdateTaskMutation();
   const [deleteTask, { isLoading: isDeleteTaskLoading }] =
@@ -373,7 +368,7 @@ const TaskView = ({ task }: TaskViewProps) => {
                       // TODO: Ensure null for project and 0 for value works well here
                       value={taskProject ? taskProject.id : 0}
                       onChange={(event) => {
-                        let tempFindProject = projects
+                        const tempFindProject = projects
                           ? projects.find(
                               (project) =>
                                 project.id === Number(event.target.value),
@@ -388,7 +383,9 @@ const TaskView = ({ task }: TaskViewProps) => {
                     >
                       <option value={0}>No Project Assigned</option>
                       {projects?.map((project) => (
-                        <option value={project.id}>{project.name}</option>
+                        <option key={project.id} value={project.id}>
+                          {project.name}
+                        </option>
                       ))}
                     </select>
                     {((task.nestedTasks && task.nestedTasks.length > 0) ||
@@ -482,7 +479,7 @@ const TaskView = ({ task }: TaskViewProps) => {
                 <div>~No Attachments to display ~</div>
               ) : (
                 urls.map((url) => (
-                  <div className="flex items-center pl-5">
+                  <div key={url} className="flex items-center pl-5">
                     {isEditable && (
                       <button
                         className={`mr-4 text-red-500 hover:text-red-600`}
@@ -523,25 +520,6 @@ const TaskView = ({ task }: TaskViewProps) => {
                   </button>
                 </div>
               )}
-              {/* TODO: Add attachments later
-            {task.attachments && task.attachments.length > 0 && (
-              <div>
-                <strong>Attachments:</strong>
-                <div className="flex flex-wrap">
-                  {/* TODO: Add attachments later
-                  {task.attachments && task.attachments.length > 0 && (
-                    <Image
-                      src={`/${task.attachments[0].fileURL}`}
-                      alt={task.attachments[0].fileName}
-                      width={400}
-                      height={200}
-                      className="rounded-md"
-                    />
-                  )}
-                </div>
-              </div>
-            )}
-            */}
             </div>
           </div>
         </div>

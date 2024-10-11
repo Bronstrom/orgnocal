@@ -51,7 +51,7 @@ const CommentList = ({
         userId, // TODO: AUTHENTIFICATION - make this the authentificated user
       },
     });
-    setIsAddingComment(false)
+    setIsAddingComment(false);
   };
 
   const handleSoftDeleteRecoverComment = async (
@@ -105,10 +105,15 @@ const CommentList = ({
       </div>
       {unSortedComments
         ?.sort((commentA, commentB) =>
-          commentA.postedDate && commentB.postedDate && commentA.postedDate > commentB.postedDate ? 1 : -1,
+          commentA.postedDate &&
+          commentB.postedDate &&
+          commentA.postedDate > commentB.postedDate
+            ? 1
+            : -1,
         )
         .map((comment: Comment) => (
           <div
+            key={comment.id}
             className={`flex ${comment.userId === userId ? "justify-start" : "justify-end"}`}
           >
             <div
@@ -130,7 +135,7 @@ const CommentList = ({
                         key={comment.user?.userId}
                         // TODO: Ensure profile picture exists
                         // TODO: Maybe have some extra validation here and have placeholder image
-                        src={`/${comment.user?.profilePictureUrl!}`}
+                        src={`/${comment.user?.profilePictureUrl}`}
                         alt={comment.user?.username || ""}
                         width={30}
                         height={30}

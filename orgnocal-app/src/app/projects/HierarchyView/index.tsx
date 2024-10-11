@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Task,
   TaskLayer,
-  useCreateLayerMutation,
   useDeleteTaskLayerMutation,
   useGetProjectLayersQuery,
   useGetTasksQuery,
@@ -25,7 +24,10 @@ import Header from "@/components/Header";
 import ModalCreateEditTaskLayer from "@/components/modal/ModalCreateEditTaskLayer";
 import { PriorityTag } from "../BoardView";
 import ModalDelete from "@/components/modal/ModalDelete";
-import { SubMenuButton, SubMenuDropdown } from "@/components/dropdown/SubMenuDropdown";
+import {
+  SubMenuButton,
+  SubMenuDropdown,
+} from "@/components/dropdown/SubMenuDropdown";
 import { CircularProgress } from "@mui/material";
 import Link from "next/link";
 
@@ -34,7 +36,6 @@ type HierarchyViewProps = {
   id: string;
   isArchivedSelected: boolean;
   taskSearchQuery: string;
-  setIsModalNewTaskOpen: (isOpen: boolean) => void;
 };
 
 // TODO: Use this for front-end layout - create a org of these initially
@@ -68,10 +69,7 @@ const HierarchyView = ({
   id,
   isArchivedSelected,
   taskSearchQuery,
-  setIsModalNewTaskOpen,
 }: HierarchyViewProps) => {
-  const [createLayer, { isLoading: isLoadingCreateLayer }] =
-    useCreateLayerMutation();
   const [deleteLayer, { isLoading: isLoadingDeleteLayer }] =
     useDeleteTaskLayerMutation();
   const {
@@ -80,7 +78,7 @@ const HierarchyView = ({
     isError: isErrorLayers,
   } = useGetProjectLayersQuery({ projectId: Number(id) });
   // taskSearchQuery & isArchived is handled differently here and doesn't hide tasks - instead this is used to highlight cards
-  let {
+  const {
     data: tasks,
     isLoading: isLoadingTasks,
     isError: isErrorTasks,
@@ -109,7 +107,7 @@ const HierarchyView = ({
     if (editingModalLayerId && !isModalDeleteOpen) {
       setIsModalLayerOpen(true);
     }
-  }, [editingModalLayerId]);
+  }, [editingModalLayerId, isModalDeleteOpen]);
 
   // TODO: Stress test this
   function handleHierarchyInstances() {
@@ -123,7 +121,7 @@ const HierarchyView = ({
         .filter((task) => !task.parentTaskId)
         .map((task) => {
           // Set-up new hierarchy structure
-          let topLayerItemCount = 1;
+          const topLayerItemCount = 1;
           let maxItemsPerLayer = 0;
           if (task.nestedTasks) {
             const nestedTasksCount = handleHierarchyInstancesNestedTasks(task);
@@ -173,16 +171,6 @@ const HierarchyView = ({
     return layerItemCount;
   }
 
-  // Todo: add getProjectLayers to layer control and pass in projectId - I think this should work to help
-  // refresh layers getter - use this useGetProjectLayersQuery as a call and then using those layers update invidual layers
-
-  // TODO: Remove this
-  function createNewTaskLayer() {
-    createLayer({
-      name: "Layer " + (taskLayers ? taskLayers.length + 1 : 1),
-      projectId: Number(id),
-    });
-  }
   const moveTaskToLayer = (
     taskId: number,
     toTaskLayer: number | null,
@@ -206,7 +194,7 @@ const HierarchyView = ({
     }
   };
 
-  let defaultLayerTasks = tasks?.filter(
+  const defaultLayerTasks = tasks?.filter(
     (task) => task.taskLayerId === null || task.taskLayerId === undefined,
   );
 
@@ -253,8 +241,8 @@ const HierarchyView = ({
             <div className="flex flex-wrap gap-5">
               Disclaimer: You are unable to move tasks with sub-tasks
               (children), please remove sub-tasks first before removing higher
-              tasks. A maximum of 5 task layers can be added. You can't delete
-              layers until all items have been moved off of it.
+              tasks. A maximum of 5 task layers can be added. You can&apos;t
+              delete layers until all items have been moved off of it.
               <button
                 className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
                 onClick={() => setIsShowDetails(!isShowDetails)}
@@ -268,13 +256,13 @@ const HierarchyView = ({
         />
       </div>
       {/* Drag & drop zone */}
-      <div className="relative w-full overflow-auto m-10">
+      <div className="relative m-10 w-full overflow-auto">
         <DndProvider backend={HTML5Backend}>
           {/* TODO: For some reason keying and mutation invalidates did not work when updating layers
             and caused them to be out of order - as a last resort they are being sorted by identifier */}
           {[...taskLayers]
             .sort((a, b) => a.id - b.id)
-            .map((taskLayer, index) => (
+            .map((taskLayer) => (
               <div
                 key={"div_" + taskLayer.id}
                 className="flex w-full items-center"
@@ -372,8 +360,6 @@ const HierarchyRow = ({
 }: HierarchyRowProps) => {
   // TODO: May be better to just pass layer in
   const currentLayer = taskLayers?.find((layer) => layer.id === id);
-  const subMenuRef = useRef<any>(null);
-  const [isOpenSubMenu, setIsOpenSubMenu] = useState(false);
   const [isLayerSpecificDrop, setIsLayerSpecificDrop] = useState(true);
 
   // DragNDrop hook for hierarchy dropzone
@@ -393,19 +379,6 @@ const HierarchyRow = ({
     }),
     [isLoadingTaskLayerUpdates, isLayerSpecificDrop, setIsLayerSpecificDrop],
   );
-
-  useEffect(() => {
-    const handleSelectionOutsideSubMenu = (event: { target: any }) => {
-      if (
-        subMenuRef.current !== null &&
-        event.target !== null &&
-        !subMenuRef.current.contains(event.target)
-      ) {
-        setIsOpenSubMenu(false);
-      }
-    };
-    document.addEventListener("mousedown", handleSelectionOutsideSubMenu);
-  }, [subMenuRef]);
 
   return (
     <div
@@ -435,7 +408,6 @@ const HierarchyRow = ({
               <SubMenuDropdown icon={undefined} direction="left">
                 <SubMenuButton
                   onClick={() => {
-                    setIsOpenSubMenu(false);
                     setEditingModalLayerId(id);
                   }}
                   icon={<IconEdit size={20} />}
@@ -445,7 +417,6 @@ const HierarchyRow = ({
                 <hr className="my-2 border-slate-200" />
                 <SubMenuButton
                   onClick={() => {
-                    setIsOpenSubMenu(false);
                     setIsModalDeleteOpen(true);
                     setEditingModalLayerId(id);
                   }}
@@ -466,8 +437,9 @@ const HierarchyRow = ({
           <div className={id === null ? "flex" : ""}>
             {tasks
               .filter((task) => task.taskLayerId === id && !task.parentTaskId)
-              .map((task, index) => (
+              .map((task) => (
                 <div
+                  key={task.id}
                   // Default layer should display in row, otherwise position items according to hierarchy
                   className={`${id === null ? "flex" : "absolute"}`}
                   style={{
@@ -475,7 +447,6 @@ const HierarchyRow = ({
                   }}
                 >
                   <DraggableTask
-                    key={task.id}
                     task={task}
                     parentTaskTitle={null}
                     isShowDetails={isShowDetails}
@@ -726,22 +697,20 @@ const DraggableTask = ({
       </div>
       {/* Handle Recursive Nested Tasks */}
       <div className="flex">
-        {task.nestedTasks?.map((subtask, index) => (
-          <div className="">
-            <DraggableTask
-              key={task.id}
-              task={subtask}
-              parentTaskTitle={task.title}
-              isShowDetails={isShowDetails}
-              moveTaskToLayer={moveTaskToLayer}
-              layerId={layerId}
-              taskLayers={taskLayers}
-              isLoadingTaskLayerUpdates={isLoadingTaskLayerUpdates}
-              // TODO: Put these in global context
-              isArchived={isArchived}
-              taskSearchQuery={taskSearchQuery}
-            />
-          </div>
+        {task.nestedTasks?.map((subtask) => (
+          <DraggableTask
+            key={task.id}
+            task={subtask}
+            parentTaskTitle={task.title}
+            isShowDetails={isShowDetails}
+            moveTaskToLayer={moveTaskToLayer}
+            layerId={layerId}
+            taskLayers={taskLayers}
+            isLoadingTaskLayerUpdates={isLoadingTaskLayerUpdates}
+            // TODO: Put these in global context
+            isArchived={isArchived}
+            taskSearchQuery={taskSearchQuery}
+          />
         ))}
       </div>
     </>

@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
-import { Priority, Status, Task, useGetTasksByUserQuery } from "@/state/api";
+import { Priority, Task, useGetTasksByUserQuery } from "@/state/api";
 import { useAppSelector } from "@/app/redux";
 import React, { useState } from "react";
 import ModalNewTask from "@/components/modal/ModalNewTask";

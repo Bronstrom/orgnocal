@@ -88,8 +88,8 @@ const Settings = () => {
   }
 
   function textFieldViewable(
-    input,
-    setInput,
+    input: string,
+    setInput: (input: string) => void,
     label = "",
     noInputProvided = "",
     subtitle = "",
@@ -236,7 +236,7 @@ const Settings = () => {
               )}
               {textFieldViewable(
                 user.email,
-                user.email,
+                () => {},
                 "Email",
                 "~ No email provided ~",
                 "Your email cannot be changed.",
@@ -251,7 +251,7 @@ const Settings = () => {
               )}
               {textFieldViewable(
                 orgStr,
-                orgStr,
+                () => {},
                 "Org(s)",
                 "~ No org(s) assigned ~",
                 "Orgs can be created by a user or assigned to a user. Orgs can be removed from the Org's main page.",

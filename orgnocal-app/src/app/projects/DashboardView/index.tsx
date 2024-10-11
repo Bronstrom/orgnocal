@@ -46,7 +46,6 @@ const taskColumns: GridColDef[] = [
 
 type DashboardViewProps = {
   id: string;
-  projectName: string;
 };
 
 // TODO: This view can be refactored a bit with the top user dashboard
@@ -98,7 +97,7 @@ const DashboardView = ({ id }: DashboardViewProps) => {
       const status =
         task.status === Status.Completed
           ? "Completed"
-          : task?.endDate < currentDate && task?.status !== Status.Completed
+          : task?.endDate && task.endDate < currentDate && task?.status !== Status.Completed
             ? "Overdue"
             : "Active";
       acc[status as Status] = (acc[status as Status] || 0) + 1;

@@ -33,7 +33,7 @@ const taskStatus = ["ToDo", "InProgress", "InReview", "Completed"];
 export const PriorityTag = ({
   priority,
 }: {
-  priority: TaskType["priority"];
+  priority: TaskType["priority"] | string;
 }) => (
   // TODO: Clean this chained ternary operator up
   <div

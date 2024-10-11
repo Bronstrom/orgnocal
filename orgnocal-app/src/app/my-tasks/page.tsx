@@ -15,8 +15,8 @@ import Link from "next/link";
 import { CircularProgress } from "@mui/material";
 
 type PrioritySelectionProps = {
-  priority: string;
-  setPriority: (priority: string) => void;
+  priority?: Priority;
+  setPriority: (priority?: Priority) => void;
 };
 
 // TODO: Reuse between edit task and this as well as use enums better
@@ -125,7 +125,7 @@ const columns: GridColDef[] = [
 const TaskDashboard = () => {
   const [activeTab, setActiveTab] = useState("Table");
   const [isModalNewTaskOpen, setIsModalNewTaskOpen] = useState(false);
-  const [priority, setPriority] = useState(undefined);
+  const [priority, setPriority] = useState<Priority | undefined>(undefined);
   const [taskSearchQuery, setTaskSearchQuery] = useState("");
 
   const [isShowingSearchDropdown, setIsShowingSearchDropdown] = useState(false);

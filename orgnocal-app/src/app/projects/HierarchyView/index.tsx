@@ -686,11 +686,11 @@ const DraggableTask = ({
                       {/* Assignee */}
                       {task.assignee && (
                         <Image
-                          key={task.assignee.IconUserId}
+                          key={task.assignee.userId}
                           // Ensure profile picture exists
                           // TODO: Maybe have some extra validation here and have placeholder image
                           src={`/${task.assignee.profilePictureUrl!}`}
-                          alt={task.assignee.IconUsername}
+                          alt={task.assignee.username}
                           width={30}
                           height={30}
                           className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
@@ -699,11 +699,11 @@ const DraggableTask = ({
                       {/* Author */}
                       {task.author && (
                         <Image
-                          key={task.author.IconUserId}
+                          key={task.author.userId}
                           // Ensure profile picture exists
                           // TODO: Maybe have some extra validation here and have placeholder image
                           src={`/${task.author.profilePictureUrl!}`}
-                          alt={task.author.IconUsername}
+                          alt={task.author.username}
                           width={30}
                           height={30}
                           className="h-8 w-8 rounded-full border-2 border-white object-cover dark:border-dark-secondary"

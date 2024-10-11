@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import FullCalendar, {
-  EventApi,
   DateSelectArg,
-  EventClickArg,
   EventContentArg,
-  formatDate,
 } from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
@@ -77,11 +74,11 @@ const CalendarView = ({
     router.push(`/tasks/${eventContent.event.id}`);
   }
 
-  // TODO: This could be in utils
-  function selectObjectTaskListReplacementProps(...props) {
-    return function (object) {
+  // TODO: This could be in utils & replace any type
+  function selectObjectTaskListReplacementProps(...props: any) {
+    return function (object: any) {
       const condensedObject = {};
-      props.forEach((nameReplacement) => {
+      props.forEach((nameReplacement: any) => {
         condensedObject[nameReplacement[1]] = object[nameReplacement[0]];
       });
       return condensedObject;
@@ -126,7 +123,7 @@ const CalendarView = ({
           isSmallText
         />
       </div>
-      <div className="p-5 rounded-md bg-white shadow dark:bg-dark-secondary dark:text-white">
+      <div className="rounded-md bg-white p-5 shadow dark:bg-dark-secondary dark:text-white">
         <FullCalendar
           plugins={[
             dayGridPlugin,

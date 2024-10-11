@@ -150,6 +150,7 @@ export interface Task {
 export interface SearchResults {
   tasks?: Task[];
   projects?: Project[];
+  orgs?: Org[];
   users?: User[];
 }
 

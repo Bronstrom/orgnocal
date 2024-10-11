@@ -17,6 +17,8 @@ import { useRouter } from "next/navigation";
 import { SubMenuButton, SubMenuDropdown } from "./dropdown/SubMenuDropdown";
 import Image from "next/image";
 import { IconGridDots } from "@tabler/icons-react";
+import { useGetAuthUserQuery } from "@/state/api";
+import { signOut } from "aws-amplify/auth";
 
 const Navbar = () => {
   const router = useRouter();
@@ -25,10 +27,22 @@ const Navbar = () => {
     (state) => state.global.isSidebarCollapsed
   );
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
-
+  
   const [isModalEditOrgOpen, setIsModalEditOrgOpen] = useState(false);
   const [isModalEditProjectOpen, setIsModalEditProjectOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+
+  const { data: currentUser } = useGetAuthUserQuery({});
+  console.log(currentUser)
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.error("Error when attempting to sign out: " + error);
+    }
+  };
+  if (!currentUser) return null;
+  const currentUserDetails = currentUser?.userDetails;
 
   function handleSearchEnter(event: { key: string }) {
     if (event.key === "Enter") {
@@ -117,7 +131,22 @@ const Navbar = () => {
         {/* TODO: Replace this with user menu - maybe settings go here? */}
         <SubMenuDropdown
           icon={
-            <IconUserSquareRounded className="h-6 w-6 cursor-pointer dark:text-white" />
+            <>
+              {!!currentUserDetails?.profilePictureUrl ? (
+                <Image
+                  key={currentUserDetails.userId}
+                  // Ensure profile picture exists
+                  // TODO: Maybe have some extra validation here and have placeholder image
+                  src={`/${currentUserDetails.profilePictureUrl!}`}
+                  alt={currentUserDetails.username}
+                  width={30}
+                  height={30}
+                  className="h-6 w-6 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+                />
+              ) : (
+                <IconUserSquareRounded className="h-6 w-6 cursor-pointer dark:text-white" />
+              )}
+            </>
           }
           direction="right"
         >
@@ -131,7 +160,7 @@ const Navbar = () => {
           </Link>
           <hr className="my-2 border-slate-200" />
           <SubMenuButton
-            onClick={() => {}}
+            onClick={handleSignOut}
             icon={<IconLogout size={20} />}
             label={"Sign Out"}
             disabled={false}

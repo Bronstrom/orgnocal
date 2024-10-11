@@ -1,4 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { fetchAuthSession, getCurrentUser } from "aws-amplify/auth";
 
 export enum Status {
   ToDo = "ToDo",
@@ -137,8 +138,8 @@ export interface Task {
   authorUserId?: number;
   assignedUserId?: number;
   // Included options not in Task schema
-  createdBy?: User
-  latestEditedBy?: User
+  createdBy?: User;
+  latestEditedBy?: User;
   author?: User;
   assignee?: User;
   taskLayer: TaskLayer;
@@ -157,7 +158,17 @@ export interface SearchResults {
 // Redux Toolkit (RTK) queries
 // TODO: Break this up into seperate files?
 export const api = createApi({
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
+    prepareHeaders: async (headers) => {
+      const session = await fetchAuthSession();
+      const accessToken = session.tokens ?? [];
+      if (accessToken) {
+        headers.set("Authorization", `Bearer ${accessToken}`);
+      }
+      return headers;
+    },
+  }),
   reducerPath: "api",
   tagTypes: [
     "Projects",
@@ -213,7 +224,10 @@ export const api = createApi({
         { type: "Projects", id: projectId },
       ],
     }),
-    updateProjectUsers: build.mutation<Project, { projectId: number; users: string[], orgs: string[] }>({
+    updateProjectUsers: build.mutation<
+      Project,
+      { projectId: number; users: string[]; orgs: string[] }
+    >({
       query: ({ projectId, users, orgs }) => ({
         url: `projects/${projectId}/update-users`,
         method: "PATCH",
@@ -329,7 +343,10 @@ export const api = createApi({
         "TaskLayers",
       ],
     }),
-    updateTaskLayerName: build.mutation<TaskLayer, { layerId: number; name: string }>({
+    updateTaskLayerName: build.mutation<
+      TaskLayer,
+      { layerId: number; name: string }
+    >({
       query: ({ layerId, name }) => ({
         url: `layers/${layerId}`,
         method: "PATCH",
@@ -347,7 +364,10 @@ export const api = createApi({
     }),
 
     /* Tasks */
-    getTasks: build.query<Task[], { projectId: number; isArchived?: boolean; query: string }>({
+    getTasks: build.query<
+      Task[],
+      { projectId: number; isArchived?: boolean; query: string }
+    >({
       query: ({ projectId, isArchived, query }) =>
         `tasks?projectId=${projectId}&archived=${isArchived}&query=${query}`,
       providesTags: (result) =>
@@ -415,7 +435,10 @@ export const api = createApi({
     }),
 
     /* Comments */
-    createComment: build.mutation<Comment, { taskId: number; partialComment: Partial<Comment> }>({
+    createComment: build.mutation<
+      Comment,
+      { taskId: number; partialComment: Partial<Comment> }
+    >({
       query: ({ taskId, partialComment }) => ({
         url: "comments",
         method: "POST",
@@ -426,7 +449,10 @@ export const api = createApi({
         { type: "Tasks", id: taskId },
       ],
     }),
-    softDeleteComment: build.mutation<Comment, { commentId: number; taskId: number; partialComment: Partial<Comment> }>({
+    softDeleteComment: build.mutation<
+      Comment,
+      { commentId: number; taskId: number; partialComment: Partial<Comment> }
+    >({
       query: ({ commentId, partialComment }) => ({
         url: `comments/${commentId}/soft-delete`,
         method: "PATCH",
@@ -450,10 +476,29 @@ export const api = createApi({
       providesTags: (result) =>
         !result
           ? [{ type: "Users" as const }]
-          :
-            [{ type: "Users" as const, userId: result.userId }],
+          : [{ type: "Users" as const, userId: result.userId }],
     }),
+    getAuthUser: build.query({
+      queryFn: async (_, _queryApi, _extraoptions, fetchWithBQ) => {
+        try {
+          const user = await getCurrentUser();
+          const session = await fetchAuthSession();
+          if (!session) throw new Error("No session found");
+          const { userSub } = session;
 
+          const userDetailsResponse = await fetchWithBQ(
+            `users/${userSub}/cognito-user`
+          );
+          const userDetails = userDetailsResponse.data as User;
+
+          return { data: { user, userSub, userDetails } };
+        } catch (error: any) {
+          return {
+            error: error.message || "Couldn't fetch Congnito user data",
+          };
+        }
+      },
+    }),
     updateUser: build.mutation<
       User,
       {
@@ -567,6 +612,7 @@ export const {
   useSoftDeleteCommentMutation,
 
   useGetUsersQuery,
+  useGetAuthUserQuery,
   useGetUserQuery,
   useUpdateUserMutation,
   useDeleteUserMutation,

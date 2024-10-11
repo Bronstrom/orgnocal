@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import e, { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { StatusCodes } from "http-status-codes";
 
@@ -39,9 +39,54 @@ export const getUser = async (
   } catch (error: any) {
     response
       .status(StatusCodes.INTERNAL_SERVER_ERROR)
-      .json({ message: `Error retrieving users - ${error.message}` });
+      .json({ message: `Error retrieving user - ${error.message}` });
   }
 };
+
+// AWS Cognito specific route
+export const getCognitoUser = async (request: Request, response: Response): Promise<void> => {
+  const { cognitoId } = request.params;
+  try {
+    // Grab user from list (using ORM)
+    const user = await prisma.user.findUnique({
+      where: {
+        cognitoId: cognitoId,
+      },
+      include: {
+        orgs: true
+      },
+    });
+    response.json(user);
+  } catch (error: any) {
+    response
+      .status(StatusCodes.INTERNAL_SERVER_ERROR)
+      .json({ message: `Error retrieving cognito user - ${error.message}` });
+  }
+}
+
+// AWS Cognito specific route
+export const createUser = async (
+  request: Request,
+  response: Response
+): Promise<void> => {
+  const { username, cognitoId, email } = request.body;
+  try {
+    const newUser = await prisma.user.create({
+      data: {
+        username,
+        cognitoId,
+        email,
+        // Set initial profile photo to first image
+        profilePictureUrl: "profile1.jpg",
+      },
+    });
+    response.json(newUser);
+  } catch (error: any) {
+    response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      message: `Error creating user with username: ${username} - ${error.message}`,
+    });
+  }
+}
 
 export const updateUser = async (
   request: Request,

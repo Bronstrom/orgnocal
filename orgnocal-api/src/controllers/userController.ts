@@ -80,7 +80,7 @@ export const createUser = async (
         profilePictureUrl: "profile1.jpg",
       },
     });
-    response.json(newUser);
+    response.json({ message: "New user created successfully", newUser });
   } catch (error: any) {
     response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
       message: `Error creating user with username: ${username} - ${error.message}`,

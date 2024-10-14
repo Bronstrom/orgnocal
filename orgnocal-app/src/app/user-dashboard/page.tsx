@@ -6,9 +6,9 @@ import {
   Project,
   Status,
   Task,
+  useGetAuthUserQuery,
   useGetProjectsQuery,
   useGetTasksByUserQuery,
-  useGetUserQuery,
 } from "@/state/api";
 import { useAppSelector } from "@/app/redux";
 import React from "react";
@@ -58,17 +58,7 @@ const taskColumns: GridColDef[] = [
 ];
 
 const UserDashboard = () => {
-  // TODO: AUTHENTICATE - get user details and replace userId
-  const userId = 1;
-  const { data: user } = useGetUserQuery(
-    {
-      userId: userId || 0,
-    },
-    // 'skip' param used when userId is not caught soon enough during authentification process
-    {
-      skip: userId === null,
-    },
-  );
+  const { data: user } = useGetAuthUserQuery({})
   const {
     data: projects,
     isLoading: isProjectsLoading,
@@ -80,11 +70,11 @@ const UserDashboard = () => {
     isError: isTasksError,
   } = useGetTasksByUserQuery(
     {
-      userId: userId || 0,
+      userId: user?.userDetails?.userId || 0,
     },
     // 'skip' param used when userId is not caught soon enough during authentification process
     {
-      skip: userId === null,
+      skip: user?.userDetails?.userId === null,
     },
   );
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
@@ -135,7 +125,7 @@ const UserDashboard = () => {
 
   return (
     <div className="flex w-full flex-col p-8">
-      <Header title={`Welcome${!user ? "" : ", " + user.username}!`} />
+      <Header title={`Welcome${!user?.userDetails ? "" : ", " + user.userDetails.username}!`} />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="rounded-lg bg-white p-4 shadow dark:bg-dark-secondary md:col-span-2">
           <div className="flex dark:text-white">

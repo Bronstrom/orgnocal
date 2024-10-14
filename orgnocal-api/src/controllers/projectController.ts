@@ -90,7 +90,7 @@ export const createProject = async (
     response.status(StatusCodes.CREATED).json(newProject);
   } catch (error: any) {
     response.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
-      message: `Error creating new project with name: '${name}' - ${error.message}`,
+      message: `Error creating new project with name: '${project.name}' - ${error.message}`,
     });
   }
 };

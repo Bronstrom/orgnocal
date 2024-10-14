@@ -6,7 +6,7 @@ import ModalEditProfilePicture from "@/components/modal/ModalEditProfilePicture"
 import { formInputStyles, formLabelStyles } from "@/lib/utils";
 import {
   useDeleteUserMutation,
-  useGetUserQuery,
+  useGetAuthUserQuery,
   useUpdateUserMutation,
 } from "@/state/api";
 import { CircularProgress } from "@mui/material";
@@ -21,21 +21,8 @@ const Settings = () => {
     useUpdateUserMutation();
   const [deleteUser, { isLoading: isLoadingDeleteUser }] =
     useDeleteUserMutation();
-  // TODO: AUTHENTICATE - get user details and replace userId
-  const userId = 1;
-  const {
-    data: user,
-    isLoading,
-    isError,
-  } = useGetUserQuery(
-    {
-      userId: userId || 0,
-    },
-    // 'skip' param used when userId is not caught soon enough during authentification process
-    {
-      skip: userId === null,
-    },
-  );
+  const { data: currentUser } = useGetAuthUserQuery({})
+  const user = currentUser?.userDetails
 
   // Required fields
   const [username, setUsername] = useState("");
@@ -78,7 +65,7 @@ const Settings = () => {
   }
 
   function invalidateSubmit() {
-    return isLoading || isLoadingUpdateUser || isLoadingDeleteUser;
+    return user === null || isLoadingUpdateUser || isLoadingDeleteUser;
   }
 
   // Validate required fields
@@ -118,19 +105,18 @@ const Settings = () => {
   }
 
   // TODO: Create reusable component for this
-  if (isLoading)
+  if (user === null)
     return (
       <div>
         <CircularProgress sx={{ margin: "20px" }} />
       </div>
     );
-  if (isError || !user)
+  if (user === null)
     return <div>An error occurred while retrieving users</div>;
 
   const handleSaveUserEdits = async () => {
-    // TODO: Must be authenticated as the current user to update them - use this on the backend
     await updateUser({
-      userId,
+      userId: user?.userId || 0,
       partialUser: {
         username: username.trim(),
         // Split on comma with any extra spaces before or after comma
@@ -143,10 +129,9 @@ const Settings = () => {
 
   const handleDeleteUser = async () => {
     try {
-      // TODO: Must be authenticated as the current user to delete them - use this on the backend
       const rerouteLink = "/";
       await deleteUser({
-        userId: userId,
+        userId: user?.userId || 0,
       });
       router.push(rerouteLink);
     } catch (err) {
@@ -213,6 +198,7 @@ const Settings = () => {
           isOpen={isModalEditProfilePictureUrl}
           onClose={() => setIsModalEditProfilePictureUrl(false)}
         />
+        {user &&
         <ModalDelete
           type={"Account"}
           name={user.username}
@@ -223,7 +209,7 @@ const Settings = () => {
           onClose={() => setIsModalDeleteOpen(false)}
           requiredField={user.username}
           isLoading={invalidateSubmit()}
-        />
+        />}
         {/* Left column */}
         <div className="col-span-2 p-10">
           <div className="pb-8">
@@ -235,7 +221,7 @@ const Settings = () => {
                 "~ No username provided ~",
               )}
               {textFieldViewable(
-                user.email,
+                user?.email || "",
                 () => {},
                 "Email",
                 "~ No email provided ~",
@@ -266,7 +252,7 @@ const Settings = () => {
           <label className={formLabelStyles}>Profile Picture</label>
           <Image
             src={`/${profilePictureUrl}`}
-            alt={user.username}
+            alt={user?.username || ""}
             width={200}
             height={200}
             className={`w-full rounded-full border-4 object-cover dark:border-dark-secondary`}

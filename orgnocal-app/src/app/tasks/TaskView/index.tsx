@@ -22,6 +22,7 @@ import {
   IconPencilOff,
   IconAlignJustified,
   IconTrash,
+  IconDeviceFloppy,
 } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -305,7 +306,7 @@ const TaskView = ({ task }: TaskViewProps) => {
               disabled={!isValidTaskEdits() || invalidateSubmit()}
               onClick={() => handleSaveEdits()}
             >
-              <IconPencilOff className="mr-2 h-5 w-5" />
+              <IconDeviceFloppy className="mr-2 h-5 w-5" />
               Save Edits
             </button>
           )}

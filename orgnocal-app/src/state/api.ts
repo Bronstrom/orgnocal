@@ -498,6 +498,10 @@ export const api = createApi({
           };
         }
       },
+      providesTags: (result) =>
+        !result
+          ? [{ type: "Users" as const }]
+          : [{ type: "Users" as const, userId: result.userDetails.userId }],
     }),
     updateUser: build.mutation<
       User,

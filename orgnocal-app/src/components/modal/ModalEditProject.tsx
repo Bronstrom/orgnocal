@@ -254,7 +254,7 @@ const ModalEditProject = ({
               ? "Modifying Project . . ."
               : "Creating Project . . ."
             : project
-              ? "Save Changes"
+              ? "Edit Project"
               : "Create Project"}
         </button>
       </form>

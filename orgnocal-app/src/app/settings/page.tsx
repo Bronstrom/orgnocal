@@ -10,10 +10,11 @@ import {
   useUpdateUserMutation,
 } from "@/state/api";
 import { CircularProgress } from "@mui/material";
-import { IconPencil, IconPencilOff } from "@tabler/icons-react";
+import { IconPencil, IconPencilOff, IconDeviceFloppy, IconUserX } from "@tabler/icons-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { deleteUser as deleteUserAuth } from 'aws-amplify/auth';
 
 const Settings = () => {
   const router = useRouter();
@@ -112,7 +113,7 @@ const Settings = () => {
       </div>
     );
   if (user === null)
-    return <div>An error occurred while retrieving users</div>;
+    return <div>An error occurred while retrieving user information</div>;
 
   const handleSaveUserEdits = async () => {
     await updateUser({
@@ -128,14 +129,19 @@ const Settings = () => {
   };
 
   const handleDeleteUser = async () => {
+    const rerouteLink = "/";
     try {
-      const rerouteLink = "/";
       await deleteUser({
         userId: user?.userId || 0,
       });
-      router.push(rerouteLink);
     } catch (err) {
-      console.error(err);
+      console.error("Error when attempting to delete user account on server: " + err);
+    }
+    try {
+      await deleteUserAuth();
+      router.push(rerouteLink);
+    } catch (error) {
+      console.error("Error when attempting to delete user account from auth: " + error);
     }
   };
 
@@ -153,6 +159,7 @@ const Settings = () => {
                 disabled={invalidateSubmit()}
                 onClick={() => setIsModalDeleteOpen(true)}
               >
+                <IconUserX className="mr-2 h-5 w-5" />
                 Delete account
               </button>
             )}
@@ -165,7 +172,7 @@ const Settings = () => {
                 onClick={handleSaveUserEdits}
               >
                 <>
-                  <IconPencilOff className="mr-2 h-5 w-5" />
+                  <IconDeviceFloppy className="mr-2 h-5 w-5" />
                   Save Edits
                 </>
               </button>

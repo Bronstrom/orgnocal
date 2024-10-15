@@ -33,7 +33,6 @@ const Navbar = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data: currentUser } = useGetAuthUserQuery({});
-  console.log(currentUser)
   const handleSignOut = async () => {
     try {
       await signOut();
@@ -141,7 +140,7 @@ const Navbar = () => {
                   alt={currentUserDetails.username}
                   width={30}
                   height={30}
-                  className="h-6 w-6 rounded-full border-2 border-white object-cover dark:border-dark-secondary"
+                  className="h-6 w-6 rounded-full border-2 object-cover border-dark-secondary dark:border-white"
                 />
               ) : (
                 <IconUserSquareRounded className="h-6 w-6 cursor-pointer dark:text-white" />

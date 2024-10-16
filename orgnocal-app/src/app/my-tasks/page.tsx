@@ -244,9 +244,9 @@ const TaskDashboard = () => {
       </div>
       {/* Display in tile or table view */}
       {isLoading ? (
-        <div className="dark:text-white">Loading tasks . . .</div>
+        <div className="dark:text-white">Loading Tasks . . .</div>
       ) : filteredTasks && filteredTasks.length < 1 ? (
-        <div className="dark:text-white">No tasks to display with the above filters</div>
+        <div className="dark:text-white">No Tasks to display with the above filters</div>
       ) : activeTab === "Tile" ? (
         <div className="grid grid-cols-1 gap-4">
           {filteredTasks?.map((task: Task) => (

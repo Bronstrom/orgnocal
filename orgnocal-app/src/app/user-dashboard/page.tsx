@@ -160,8 +160,8 @@ const UserDashboard = () => {
                 <IconChartPie size={100} />
               </div>
               <div className="inline-block justify-center text-center">
-                <p>No project data to display.</p>
-                <p>Add some projects to view Project Completion.</p>
+                <p>No Project data to display.</p>
+                <p>Add some Projects to view Project Completion.</p>
               </div>
             </div>
           ) : (
@@ -207,8 +207,8 @@ const UserDashboard = () => {
                 <IconChartBar size={100} />
               </div>
               <div className="inline-block justify-center text-center">
-                <p>No project data to display.</p>
-                <p>Add some projects to view My Task Priority Distribution.</p>
+                <p>No Project data to display.</p>
+                <p>Add some Projects to view My Task Priority Distribution.</p>
               </div>
             </div>
           ) : (

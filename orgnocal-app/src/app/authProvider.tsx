@@ -66,7 +66,7 @@ const formFields = {
 // TODO: Change any type
 const AuthProvider = ({children}: any) => {
   return (
-    <div className="mt-5">
+    <div>
       <Authenticator formFields={formFields} components={components}>{({ user }) => 
         user ? (
           <div>{children}</div>

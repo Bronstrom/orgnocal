@@ -91,7 +91,7 @@ const GanttView = ({ id, isArchivedSelected, taskSearchQuery, setIsModalNewTaskO
       <div className="overflow-hidden rounded-md bg-white shadow dark:bg-dark-secondary dark:text-white">
         <div className="gantt">
           {ganttTasks.length < 1 ? (
-            "No tasks to display"
+            "No Tasks to display"
           ) : (
             <Gantt
               tasks={ganttTasks}

@@ -9,6 +9,7 @@ import { IconCalendarWeek } from "@tabler/icons-react";
 import { useGetTasksQuery } from "@/state/api";
 import { useRouter } from "next/navigation";
 import { DateSelectArg, EventContentArg } from "@fullcalendar/core/index.js";
+import MoreInfo from "@/components/MoreInfo";
 
 const views = {
   timeGridDay: {
@@ -49,9 +50,7 @@ const CalendarView = ({
   setIsModalNewTaskOpen,
   setStartAndEndDates,
 }: CalendarViewProps) => {
-  const {
-    data: tasks,
-  } = useGetTasksQuery({
+  const { data: tasks } = useGetTasksQuery({
     projectId: Number(id),
     isArchived: isArchivedSelected,
     query: taskSearchQuery,
@@ -106,6 +105,32 @@ const CalendarView = ({
           title="Calendar"
           rightAlignedComponent={
             <div className="flex flex-wrap items-center gap-5">
+              <MoreInfo
+                title={
+                  <div className="grid gap-2">
+                    <div className="text-center">
+                      <b>Calendar View Info:</b>
+                    </div>
+                    <div>
+                      Calendar View displays tasks according to their start and
+                      end dates. Use the timeframe buttons on the top right of
+                      the calendar to select between: "6 Months", "Month", and
+                      "Week", and "Day" to see how tasks lineup for different
+                      time periods.
+                    </div>
+                    <div>
+                      <b>Time Periods:</b> Use the arrows on the right to switch
+                      between the previous and next period according to the
+                      timeframe selected. To return to the current period, use
+                      the "today" button next to the arrows.
+                    </div>
+                    <div>
+                      <b>Weekends:</b> Weekends can be hidden/revealed with the
+                      "Hide Weekends" and "Show Weekends" buttons, respectively.
+                    </div>
+                  </div>
+                }
+              />
               <div className="relative inline-block">
                 <button
                   className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"

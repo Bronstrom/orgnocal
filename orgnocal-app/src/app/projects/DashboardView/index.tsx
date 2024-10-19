@@ -4,7 +4,13 @@ import { Priority, Status, Task, useGetTasksQuery } from "@/state/api";
 import { useAppSelector } from "@/app/redux";
 import React from "react";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { barChartColorsDark, barChartColorsLight, dataGridClassNames, dataGridSxStyles, pieChartColors } from "@/lib/utils";
+import {
+  barChartColorsDark,
+  barChartColorsLight,
+  dataGridClassNames,
+  dataGridSxStyles,
+  pieChartColors,
+} from "@/lib/utils";
 import {
   Bar,
   BarChart,
@@ -23,6 +29,7 @@ import { IconAlarm, IconChartBar, IconChartPie } from "@tabler/icons-react";
 import { formatISO } from "date-fns";
 import { CircularProgress } from "@mui/material";
 import Header from "@/components/Header";
+import MoreInfo from "@/components/MoreInfo";
 
 // These consts won't be rerended
 const taskColumns: GridColDef[] = [
@@ -97,7 +104,9 @@ const DashboardView = ({ id }: DashboardViewProps) => {
       const status =
         task.status === Status.Completed
           ? "Completed"
-          : task?.endDate && task.endDate < currentDate /* TODO: Ensure this isn't needed: && task.status !== Status.Completed */
+          : task?.endDate &&
+              task.endDate <
+                currentDate /* TODO: Ensure this isn't needed: && task.status !== Status.Completed */
             ? "Overdue"
             : "Active";
       acc[status as Status] = (acc[status as Status] || 0) + 1;
@@ -113,9 +122,38 @@ const DashboardView = ({ id }: DashboardViewProps) => {
   return (
     <div className="flex w-full flex-col p-6">
       <Header
-          title="Dashboard"
-          isSmallText
-        />
+        title="Dashboard"
+        rightAlignedComponent={
+          <MoreInfo
+            title={
+              <div className="grid gap-2">
+                <div className="text-center">
+                  <b>Dashboard View Info:</b>
+                </div>
+                <div>
+                  Dashboard View displays a variety of metrics and data about
+                  the project.
+                </div>
+                <div>
+                  <b>Current Tasks:</b> This pane shares info on what tasks are
+                  currently not completed, including active and overdue tasks.
+                </div>
+                <div>
+                  <b>Task Status Distribution:</b> This pane displays a pie
+                  chart of general statuses of task items, including active,
+                  overdue, and completed tasks.
+                </div>
+                <div>
+                  <b>Task Priority Distribution:</b> This pane displays a bar
+                  chart chart of the priorities of active and overdue task
+                  items.
+                </div>
+              </div>
+            }
+          />
+        }
+        isSmallText
+      />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <div className="rounded-lg bg-white p-4 shadow dark:bg-dark-secondary md:col-span-2 lg:col-span-1">
           <div className="flex dark:text-white">
@@ -161,7 +199,12 @@ const DashboardView = ({ id }: DashboardViewProps) => {
               </Pie>
               <Tooltip />
               <Legend />
-              <Bar dataKey="count" fill={isDarkMode ? barChartColorsDark.bar : barChartColorsLight.bar} />
+              <Bar
+                dataKey="count"
+                fill={
+                  isDarkMode ? barChartColorsDark.bar : barChartColorsLight.bar
+                }
+              />
             </PieChart>
           </ResponsiveContainer>
         </div>
@@ -176,7 +219,11 @@ const DashboardView = ({ id }: DashboardViewProps) => {
             <BarChart data={taskPriorityDistribution}>
               <CartesianGrid
                 strokeDasharray="3 3"
-                stroke={isDarkMode ? barChartColorsDark.barGrid : barChartColorsLight.barGrid}
+                stroke={
+                  isDarkMode
+                    ? barChartColorsDark.barGrid
+                    : barChartColorsLight.barGrid
+                }
               />
               <XAxis dataKey="name" />
               <YAxis />
@@ -187,7 +234,12 @@ const DashboardView = ({ id }: DashboardViewProps) => {
                 }}
               />
               <Legend />
-              <Bar dataKey="count" fill={isDarkMode ? barChartColorsDark.bar : barChartColorsLight.bar} />
+              <Bar
+                dataKey="count"
+                fill={
+                  isDarkMode ? barChartColorsDark.bar : barChartColorsLight.bar
+                }
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -5,6 +5,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { dataGridClassNames, dataGridSxStyles } from "@/lib/utils";
 import { useAppSelector } from "@/app/redux";
 import { CircularProgress } from "@mui/material";
+import MoreInfo from "@/components/MoreInfo";
 
 // TODO: Props can be reused from the different views
 type TableViewProps = {
@@ -97,7 +98,27 @@ const TableView = ({
   return (
     <div className="h-[34rem]w-full px-4 pb-8 xl:px-6">
       <div className="pt-5">
-        <Header title="Table" isSmallText />
+        <Header
+          title="Table"
+          rightAlignedComponent={
+            <MoreInfo
+              title={
+                <div className="grid gap-2">
+                  <div className="text-center">
+                    <b>Table View Info:</b>
+                  </div>
+                  <div>
+                    Table View displays tasks in a list structure. Each table
+                    item task displays title, date, status, user infomation, and
+                    other details. Columns can be ordered and filtered by
+                    selecting the ellipsis icon on the column.
+                  </div>
+                </div>
+              }
+            />
+          }
+          isSmallText
+        />
       </div>
       <DataGrid
         disableRowSelectionOnClick

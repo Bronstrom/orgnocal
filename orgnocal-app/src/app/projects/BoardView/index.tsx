@@ -19,6 +19,7 @@ import {
   SubMenuDropdown,
 } from "@/components/dropdown/SubMenuDropdown";
 import { CircularProgress } from "@mui/material";
+import MoreInfo from "@/components/MoreInfo";
 
 // TODO: Props can be reused from the different views
 type BoardViewProps = {
@@ -90,7 +91,27 @@ const BoardView = ({
   return (
     <div>
       <div className="flex flex-wrap items-center justify-between gap-2 px-4 py-5 xl:px-6">
-        <Header title="Board" isSmallText />
+        <Header
+          title="Board"
+          rightAlignedComponent={
+            <MoreInfo
+              title={
+                <div className="grid gap-2">
+                  <div className="text-center">
+                    <b>Board View Info:</b>
+                  </div>
+                  <div>
+                    Board View supports drag-and-drop to arrange task status in
+                    a project. Move items between the columns to change the
+                    status. A new task can be created with a certain status when
+                    clicking on the "+" dropdown item in the ellipsis menu on a status column.
+                  </div>
+                </div>
+              }
+            />
+          }
+          isSmallText
+        />
       </div>
       <DndProvider backend={HTML5Backend}>
         <div className="grid grid-cols-1 gap-4 p-4 md:grid-cols-2 xl:grid-cols-4">
@@ -247,7 +268,7 @@ const Task = ({ task }: TaskProps) => {
               ))}
             </div>
           </div>
-          <button className="dark:text-neutral-500 flex h-6 w-4 flex-shrink-0 items-center justify-center">
+          <button className="flex h-6 w-4 flex-shrink-0 items-center justify-center dark:text-neutral-500">
             <SubMenuDropdown icon={<IconDots size={18} />} direction="left">
               <Link href={`/tasks/${task.id}`}>
                 <SubMenuButton

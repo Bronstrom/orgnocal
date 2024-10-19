@@ -7,6 +7,7 @@ import "gantt-task-react/dist/index.css";
 import Header from "@/components/Header";
 import { IconSquarePlus } from "@tabler/icons-react";
 import { CircularProgress } from "@mui/material";
+import MoreInfo from "@/components/MoreInfo";
 
 // TODO: Props can be reused from the different views
 type GanttViewProps = {
@@ -19,12 +20,21 @@ type GanttViewProps = {
 // TODO: Put in utils file for reuse
 type TaskTypeDivisions = "task" | "milestone" | "project";
 
-const GanttView = ({ id, isArchivedSelected, taskSearchQuery, setIsModalNewTaskOpen }: GanttViewProps) => {
+const GanttView = ({
+  id,
+  isArchivedSelected,
+  taskSearchQuery,
+  setIsModalNewTaskOpen,
+}: GanttViewProps) => {
   const {
     data: tasks,
     isLoading,
     error,
-  } = useGetTasksQuery({ projectId: Number(id), isArchived: isArchivedSelected, query: taskSearchQuery });
+  } = useGetTasksQuery({
+    projectId: Number(id),
+    isArchived: isArchivedSelected,
+    query: taskSearchQuery,
+  });
 
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
   const [displayOptions, setDisplayoptions] = useState<DisplayOption>({
@@ -59,17 +69,37 @@ const GanttView = ({ id, isArchivedSelected, taskSearchQuery, setIsModalNewTaskO
   };
 
   // TODO: Create reusable component for this
-  if (isLoading) return <div><CircularProgress sx={{ margin: "20px" }} /></div>;
+  if (isLoading)
+    return (
+      <div>
+        <CircularProgress sx={{ margin: "20px" }} />
+      </div>
+    );
   if (error) return <div>An error occurred while retrieving tasks</div>;
 
   // TODO: A lot of this is reused between /timeline and GanttView - consider making reusable component
   return (
-    <div className="px-4 xl:px-6 mb-10">
+    <div className="mb-10 px-4 xl:px-6">
       <div className="flex flex-wrap items-center justify-between gap-2 py-5">
         <Header
           title="Gantt"
           rightAlignedComponent={
-            <div className="flex flex-wrap gap-5">
+            <div className="flex flex-wrap items-center gap-5">
+              <MoreInfo
+                title={
+                  <div className="grid gap-2">
+                    <div className="text-center">
+                      <b>Gantt View Info:</b>
+                    </div>
+                    <div>
+                      Gantt View displays tasks in a list according to
+                      their start and end dates. Use the timeframe dropdown to
+                      select from: "Day", "Week", "Month", and "Year" to see how
+                      tasks lineup for different time periods.
+                    </div>
+                  </div>
+                }
+              />
               <div className="relative inline-block w-64">
                 <select
                   className="focus:shadow-outline block w-full appearance-none rounded border border-gray-400 bg-white px-4 py-2 pr-8 leading-tight shadow hover:border-gray-500 focus:outline-none dark:border-dark-secondary dark:bg-dark-secondary dark:text-white"

@@ -14,9 +14,10 @@ import {
   IconDoor,
   IconEdit,
   IconDotsVertical,
-  IconInfoCircle,
   IconSquareRoundedX,
   IconMessage,
+  IconDetails,
+  IconDetailsOff,
 } from "@tabler/icons-react";
 import { format } from "date-fns";
 import Image from "next/image";
@@ -30,6 +31,7 @@ import {
 } from "@/components/dropdown/SubMenuDropdown";
 import { CircularProgress } from "@mui/material";
 import Link from "next/link";
+import MoreInfo from "@/components/MoreInfo";
 
 // TODO: Props can be reused from the different views
 type HierarchyViewProps = {
@@ -239,16 +241,49 @@ const HierarchyView = ({
           title="Hierarchy"
           rightAlignedComponent={
             <div className="flex flex-wrap gap-5">
-              Disclaimer: You are unable to move tasks with sub-tasks
-              (children), please remove sub-tasks first before removing higher
-              tasks. A maximum of 5 task layers can be added. You can&apos;t
-              delete layers until all items have been moved off of it.
+              <MoreInfo
+                title={
+                  <div className="grid gap-2">
+                    <div className="text-center">
+                      <b>Hierarchy View Info:</b>
+                    </div>
+                    <div>
+                      Hierarchy View supports drag-and-drop to arrange
+                      relationships between tasks in a project. Layers are used
+                      to display the leveling of tasks. Tasks on layers higher
+                      up, contain items in lower layers. Each hierarchy
+                      structure fits it's own column. Scroll left and right in
+                      the layers area to see the full structures.
+                    </div>
+                    <div>
+                      <b>Parent Tasks:</b> If a task contains a sub-tasks (child
+                      task), it will be unable to be moved. Please remove
+                      sub-tasks prior to removing higher tasks.
+                    </div>
+                    <div>
+                      <b>Layers:</b> A maximum of 5 task layers can be added.
+                      New Layers can be inserted from the bottom. Layers cannot
+                      be deleted until all items have been moved off of the
+                      layer first.
+                    </div>
+                  </div>
+                }
+              />
               <button
                 className="flex items-center rounded bg-blue-primary px-3 py-2 text-white hover:bg-blue-600"
                 onClick={() => setIsShowDetails(!isShowDetails)}
               >
-                <IconInfoCircle className="mr-2 h-5 w-5" />
-                {!isShowDetails ? "Show" : "Hide"} Details
+                {!isShowDetails ? (
+                  <>
+                    <IconDetails className="mr-2 h-5 w-5" />
+                    Show Details
+                  </>
+                ) : (
+                  <>
+                    <IconDetailsOff className="mr-2 h-5 w-5" />
+                    Hide Details
+                  </>
+                )}
               </button>
             </div>
           }
@@ -397,7 +432,7 @@ const HierarchyRow = ({
         // Unable to mix vars with css sizes: Ensure that 15rem and 5rem matches TASK_ITEM_SIZE expanded and collapsed respectively
         className={`flex ${isShowDetails ? "h-[15.5rem]" : "h-[5rem]"}`}
       >
-        <div className="my-[0.25rem] w-40 grow-0">
+        <div className="my-[0.25rem] w-60 grow-0">
           {/* TODO: Needing to override colors here, see if there is a better approach; And avoid 'style' */}
           <div className="w-2 rounded-s-lg" />
           <div className="flex h-full items-center justify-between rounded-e-lg bg-gray-200 px-5 py-4 dark:bg-dark-tertiary">
@@ -610,7 +645,7 @@ const DraggableTask = ({
                       ))}
                     </div>
                   </div>
-                  <button className="dark:text-neutral-500 flex h-6 w-4 flex-shrink-0 items-center justify-center">
+                  <button className="flex h-6 w-4 flex-shrink-0 items-center justify-center dark:text-neutral-500">
                     <SubMenuDropdown
                       icon={<IconDotsVertical size={18} />}
                       direction="left"
@@ -633,8 +668,10 @@ const DraggableTask = ({
                   className={`ext-md font-bold dark:text-white ${!isShowDetails && "max-h-[1.5rem]"} overflow-hidden text-ellipsis`}
                 >
                   {task.title}{" "}
+                  {/* TODO: For testing purposes, remove this
                   {parentTaskTitle ? `(subtask of '${parentTaskTitle}')` : ""}(
                   {"layer: " + task.taskLayerId}){"Archived: " + task.archived}
+                  */}
                 </h4>
               </div>
               {/* TODO: Customize more of this content to filter things out */}

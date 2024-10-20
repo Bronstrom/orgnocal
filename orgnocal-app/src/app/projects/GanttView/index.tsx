@@ -94,7 +94,7 @@ const GanttView = ({
                     <div>
                       Gantt View displays tasks in a list according to
                       their start and end dates. Use the timeframe dropdown to
-                      select from: "Day", "Week", "Month", and "Year" to see how
+                      select from: &quot;Day&quot;, &quot;Week&quot;, &quot;Month&quot;, and &quot;Year&quot; to see how
                       tasks lineup for different time periods.
                     </div>
                   </div>

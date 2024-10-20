@@ -252,7 +252,7 @@ const HierarchyView = ({
                       relationships between tasks in a project. Layers are used
                       to display the leveling of tasks. Tasks on layers higher
                       up, contain items in lower layers. Each hierarchy
-                      structure fits it's own column. Scroll left and right in
+                      structure fits it&apos;s own column. Scroll left and right in
                       the layers area to see the full structures.
                     </div>
                     <div>

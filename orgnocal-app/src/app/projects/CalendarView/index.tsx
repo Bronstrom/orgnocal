@@ -114,19 +114,21 @@ const CalendarView = ({
                     <div>
                       Calendar View displays tasks according to their start and
                       end dates. Use the timeframe buttons on the top right of
-                      the calendar to select between: "6 Months", "Month", and
-                      "Week", and "Day" to see how tasks lineup for different
-                      time periods.
+                      the calendar to select between: &quot;6 Months&quot;,
+                      &quot;Month&quot;, and &quot;Week&quot;, and
+                      &quot;Day&quot; to see how tasks lineup for different time
+                      periods.
                     </div>
                     <div>
                       <b>Time Periods:</b> Use the arrows on the right to switch
                       between the previous and next period according to the
                       timeframe selected. To return to the current period, use
-                      the "today" button next to the arrows.
+                      the &quot;today&quot; button next to the arrows.
                     </div>
                     <div>
                       <b>Weekends:</b> Weekends can be hidden/revealed with the
-                      "Hide Weekends" and "Show Weekends" buttons, respectively.
+                      &quot;Hide Weekends&quot; and &quot;Show Weekends&quot;
+                      buttons, respectively.
                     </div>
                   </div>
                 }

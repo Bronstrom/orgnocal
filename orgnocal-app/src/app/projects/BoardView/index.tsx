@@ -104,7 +104,7 @@ const BoardView = ({
                     Board View supports drag-and-drop to arrange task status in
                     a project. Move items between the columns to change the
                     status. A new task can be created with a certain status when
-                    clicking on the "+" dropdown item in the ellipsis menu on a status column.
+                    clicking on the &quot;+&quot; dropdown item in the ellipsis menu on a status column.
                   </div>
                 </div>
               }

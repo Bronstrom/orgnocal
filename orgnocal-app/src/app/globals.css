@@ -75,3 +75,34 @@ body,
   width: 0px;
   height: 0px;
 }
+
+/* Amplify color adjustments */
+.amplify-button--primary {
+  background: linear-gradient(
+    to right,
+    theme('colors.blue-primary'),
+    theme('colors.turquoise-tertiary')
+  );
+}
+
+.amplify-tabs__item:not(.amplify-tabs__item--active) {
+  border-color: theme('colors.blue-primary');
+  color: theme('colors.blue-primary');
+}
+.amplify-tabs__item:hover {
+  color: theme('colors.turquoise-tertiary');
+}
+.amplify-tabs__item--active {
+  border-color: theme('colors.turquoise-tertiary');
+  color: theme('colors.turquoise-tertiary');
+}
+
+.amplify-button--link {
+  color: theme('colors.blue-primary');
+}
+.amplify-button--link:hover {
+  color: theme('colors.turquoise-tertiary');
+}
+.amplify-field-group__control:focus {
+  box-shadow: 0 0 0 2px theme('colors.turquoise-tertiary');
+}

@@ -22,35 +22,44 @@ Amplify.configure({
   },
 });
 
+function renderAuthHeader(title: string, details: any) {
+  return (
+    <View textAlign="center">
+      <Image
+        alt="Orgnocal Logo"
+        src="/orgnocal_logo_light.png"
+        objectFit="initial"
+        objectPosition="50% 50%"
+        height="75%"
+        width="75%"
+      />
+      <Heading paddingTop={20} level={3}>
+        {title}
+      </Heading>
+      <Flex direction="row" alignItems="center" justifyContent="center">
+        {details}
+      </Flex>
+    </View>
+  );
+}
+
 const components = {
   SignIn: {
     Header() {
       const { toSignUp } = useAuthenticator();
-      return (
-        <View textAlign="center">
-          <Image
-            alt="Orgnocal Logo"
-            src="/orgnocal_logo_light.png"
-            objectFit="initial"
-            objectPosition="50% 50%"
-            height="75%"
-            width="75%"
-          />
-          <Heading paddingTop={10} level={3}>
-            Welcome back
-          </Heading>
-          <Flex direction="row" alignItems="center" justifyContent="center">
-            <Text>Don&apos;t have an Orgnocal account?</Text>
-            <Button
-              fontWeight="normal"
-              onClick={toSignUp}
-              size="small"
-              variation="link"
-            >
-              Sign Up
-            </Button>
-          </Flex>
-        </View>
+      return renderAuthHeader(
+        "Welcome back",
+        <>
+          <Text>Don&apos;t have an Orgnocal account?</Text>
+          <Button
+            fontWeight="normal"
+            onClick={toSignUp}
+            size="small"
+            variation="link"
+          >
+            Sign Up
+          </Button>
+        </>,
       );
     },
     Footer() {
@@ -72,72 +81,33 @@ const components = {
   SignUp: {
     Header() {
       const { toSignIn } = useAuthenticator();
-      return (
-        <View textAlign="center">
-          <Image
-            alt="Orgnocal Logo"
-            src="/orgnocal_logo_light.png"
-            objectFit="initial"
-            objectPosition="50% 50%"
-            height="75%"
-            width="75%"
-          />
-          <Heading paddingTop={20} level={3}>
-            Create an Orgnocal Account
-          </Heading>
-          <Flex direction="row" alignItems="center" justifyContent="center">
-            <Text>Already have an Orgnocal account?</Text>
-            <Button
-              fontWeight="normal"
-              onClick={toSignIn}
-              size="small"
-              variation="link"
-            >
-              Sign In
-            </Button>
-          </Flex>
-        </View>
+      return renderAuthHeader(
+        "Create an Orgnocal Account",
+        <>
+          <Text>Already have an Orgnocal account?</Text>
+          <Button
+            fontWeight="normal"
+            onClick={toSignIn}
+            size="small"
+            variation="link"
+          >
+            Sign In
+          </Button>
+        </>,
       );
     },
   },
   ForgotPassword: {
     Header() {
-      return (
-        <View textAlign="center">
-          <Image
-            alt="Orgnocal Logo"
-            src="/orgnocal_logo_light.png"
-            objectFit="initial"
-            objectPosition="50% 50%"
-            height="75%"
-            width="75%"
-          />
-          <Heading paddingTop={20} paddingBottom={5} level={3}>
-            Forgot Password
-          </Heading>
-          <Flex direction="row" alignItems="center" justifyContent="center">
-            <Text>Please enter the following information.</Text>
-          </Flex>
-        </View>
+      return renderAuthHeader(
+        "Forgot Password",
+        <>
+          <Text>Please enter the following information.</Text>
+        </>,
       );
     },
   },
 };
-
-// const components = {
-//   Header() {
-//     return (
-//       <View textAlign="center" padding="15px">
-//         <Image
-//           alt="Orgnocal Logo"
-//           src="/orgnocal_logo_light.png"
-//           width={400}
-//           height={400}
-//         />
-//       </View>
-//     );
-//   },
-// };
 
 const formFields = {
   signUp: {

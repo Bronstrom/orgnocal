@@ -48,7 +48,7 @@ const Org = ({ params }: OrgProps) => {
         <div className="flex h-full w-full items-center justify-center">
           <div className="h-9 w-9">
             <Image
-              src={`/${params.field}`}
+              src={`/${params.row.profilePictureUrl}`}
               alt={params.row.username}
               width={100}
               height={100}

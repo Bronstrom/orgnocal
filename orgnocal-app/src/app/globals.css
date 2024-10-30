@@ -83,6 +83,15 @@ body,
     theme('colors.blue-primary'),
     theme('colors.turquoise-tertiary')
   );
+  border-color: theme('colors.blue-primary');
+}
+.amplify-button--primary:hover {
+  background: linear-gradient(
+    to right,
+    theme('colors.royal-secondary'),
+    theme('colors.blue-primary')
+  );
+  border-color: theme('colors.royal-secondary');
 }
 
 .amplify-tabs__item:not(.amplify-tabs__item--active) {

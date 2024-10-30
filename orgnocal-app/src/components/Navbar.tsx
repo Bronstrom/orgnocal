@@ -27,7 +27,7 @@ const Navbar = () => {
     (state) => state.global.isSidebarCollapsed
   );
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
-  
+
   const [isModalEditOrgOpen, setIsModalEditOrgOpen] = useState(false);
   const [isModalEditProjectOpen, setIsModalEditProjectOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -73,16 +73,15 @@ const Navbar = () => {
           />
         </button>
         <div className="pt-2 ml-5 mr-7">
-          <Image
-            src={
-              isDarkMode
-                ? "/orgnocal_logo_dark.png"
-                : "/orgnocal_logo_light.png"
-            }
-            alt="Orgnocal Logo"
-            width={115}
-            height={115}
-          />
+          <Link href="/">
+            <Image
+              src="/orgnocal_logo_dark.png"
+              alt="Orgnocal Logo"
+              width={115}
+              height={115}
+              className={isDarkMode ? "" : "invert"}
+            />
+          </Link>
         </div>
         <div className="relative flex h-min w-[25rem] ml-7">
           <IconSearch className="absolute left-[0.5rem] top-1/2 mr-2 h-5 w-5 -translate-y-1/2 transform cursor-pointer dark:text-white" />

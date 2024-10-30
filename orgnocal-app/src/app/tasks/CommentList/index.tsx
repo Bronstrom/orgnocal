@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Comment,
   useCreateCommentMutation,
+  useGetAuthUserQuery,
   useSoftDeleteCommentMutation,
 } from "@/state/api";
 import {
@@ -34,7 +35,9 @@ const CommentList = ({
     { isLoading: isLoadingSoftDeleteRecoverComment },
   ] = useSoftDeleteCommentMutation();
 
-  const userId = 1; // TODO: AUTHENTIFICATION - make this the authentificated user
+  const { data: user } = useGetAuthUserQuery({})
+  const userId = user?.userDetails?.userId;
+  
   const [isAddingComment, setIsAddingComment] = useState(false);
   const [commentText, setCommentText] = useState("");
 
@@ -48,7 +51,7 @@ const CommentList = ({
       partialComment: {
         text: commentText,
         postedDate: formattedPostedDate,
-        userId, // TODO: AUTHENTIFICATION - make this the authentificated user
+        userId,
       },
     });
     setIsAddingComment(false);
@@ -66,7 +69,7 @@ const CommentList = ({
       formattedSoftDeleteDate = formatISO(new Date(), {
         representation: "complete",
       });
-      deletedByUserId = userId; // TODO: AUTHENTIFICATION - make this the authentificated user
+      deletedByUserId = userId;
     }
 
     await softDeleteRecoverComment({
@@ -74,7 +77,7 @@ const CommentList = ({
       commentId: commentId,
       partialComment: {
         deletedAt: formattedSoftDeleteDate,
-        deletedByUserId: deletedByUserId, // TODO: AUTHENTIFICATION - make this the authentificated user
+        deletedByUserId: deletedByUserId,
       },
     });
   };

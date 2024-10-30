@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useCreateTaskMutation, Status, Priority } from "@/state/api";
+import { useCreateTaskMutation, Status, Priority, useGetAuthUserQuery } from "@/state/api";
 import { formatISO } from "date-fns";
 import Modal from "@/components/modal/Modal";
 import UserAssignmentDropdownViewable from "../dropdown/UserAssignmentDropdownViewable";
@@ -21,6 +21,10 @@ const ModalNewTask = ({
   projectId = null,
 }: ModalNewTaskProps) => {
   const [createTask, { isLoading }] = useCreateTaskMutation();
+
+  const { data: user } = useGetAuthUserQuery({})
+  const userId = user?.userDetails?.userId;
+
   // TODO: If getting to a lot validation use library
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -72,7 +76,6 @@ const ModalNewTask = ({
     const formattedPostedDate = formatISO(new Date(), {
       representation: "complete",
     });
-    // TODO: Authentification - Assign this user to createdByUserId
     await createTask({
       title,
       description,
@@ -86,7 +89,7 @@ const ModalNewTask = ({
       projectId: projectId !== null ? projectId : Number(userInputProjectId),
       authorUserId: authorUserId,
       assignedUserId: assignedUserId,
-      createdByUserId: Number(authorUserId), // TODO: AUTHENTIFICATION - make this the authentificated user
+      createdByUserId: userId,
     });
     onClose();
   };

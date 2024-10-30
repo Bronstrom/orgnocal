@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/components/Header";
-import { Priority, Task, useGetTasksByUserQuery } from "@/state/api";
+import { Priority, Task, useGetAuthUserQuery, useGetTasksByUserQuery } from "@/state/api";
 import { useAppSelector } from "@/app/redux";
 import React, { useState } from "react";
 import ModalNewTask from "@/components/modal/ModalNewTask";
@@ -135,8 +135,8 @@ const TaskDashboard = () => {
     "assignee",
   ]);
 
-  // TODO: AUTHENTIFICATION - Replace with actual user when authentification is finished
-  const userId = 1;
+  const { data: user } = useGetAuthUserQuery({})
+  const userId = user?.userDetails?.userId;
   const {
     data: tasks,
     isLoading,

@@ -9,6 +9,7 @@ import {
   useGetProjectsQuery,
   useUpdateTaskMutation,
   useDeleteTaskMutation,
+  useGetAuthUserQuery,
 } from "@/state/api";
 import { format, formatISO } from "date-fns";
 import {
@@ -46,6 +47,8 @@ const TaskView = ({ task }: TaskViewProps) => {
     useUpdateTaskMutation();
   const [deleteTask, { isLoading: isDeleteTaskLoading }] =
     useDeleteTaskMutation();
+  const { data: user } = useGetAuthUserQuery({});
+  const userId = user?.userDetails?.userId;
   // TODO: Placeholder for actual edits
   const isLoading = false;
 
@@ -243,7 +246,7 @@ const TaskView = ({ task }: TaskViewProps) => {
         archived: isArchived,
         authorUserId: taskAuthorUserId,
         assignedUserId: taskAssignedUserId,
-        latestEditedByUserId: 1, // TODO: AUTHENTIFICATION - make this the authentificated user
+        latestEditedByUserId: userId,
       },
     });
     setIsEditable(false);

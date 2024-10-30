@@ -3,6 +3,7 @@ import {
   Project,
   useCreateProjectMutation,
   useDeleteProjectMutation,
+  useGetAuthUserQuery,
   useUpdateProjectMutation,
 } from "@/state/api";
 import { format, formatISO } from "date-fns";
@@ -23,6 +24,9 @@ const ModalEditProject = ({
   onClose,
 }: ModalEditProjectProps) => {
   const router = useRouter();
+
+  const { data: user } = useGetAuthUserQuery({})
+  const userId = user?.userDetails?.userId;
 
   const [createProject, { isLoading: isLoadingCreateProject }] =
     useCreateProjectMutation();
@@ -97,7 +101,7 @@ const ModalEditProject = ({
           description,
           startDate: formattedStartDate,
           endDate: formattedEndDate,
-          createdByUserId: 1, // TODO: AUTHENTIFICATION - make this the authentificated user
+          createdByUserId: userId,
         },
         views: views,
       });

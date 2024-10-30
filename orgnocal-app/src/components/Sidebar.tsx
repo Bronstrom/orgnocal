@@ -27,7 +27,7 @@ const Sidebar = () => {
   const [isModalEditOrgOpen, setIsModalEditOrgOpen] = useState(false);
   const [isModalEditProjectOpen, setIsModalEditProjectOpen] = useState(false);
 
-  // TODO: AUTHENTIFICATION - Swap this out for actual IconUser
+  // TODO: AUTHENTIFICATION and add isAdmin user capabilities
   const isAdminIconUser = false;
 
   // Grab project data from api

@@ -3,6 +3,7 @@ import {
   Org,
   useCreateOrgMutation,
   useDeleteOrgMutation,
+  useGetAuthUserQuery,
   useGetUsersQuery,
   useUpdateOrgMutation,
 } from "@/state/api";
@@ -35,7 +36,8 @@ const ModalEditOrg = ({ org, isOpen, onClose }: ModalEditOrgProps) => {
   const [projectManager, setProjectManager] = useState<string | undefined>(
     undefined
   );
-  const createdByUserId = 1; // TODO: AUTHENTIFICATION: Replace after authentification
+ const { data: user } = useGetAuthUserQuery({})
+  const createdByUserId = user?.userDetails?.userId;
 
   const [isShowingSearchDropdown, setIsShowingSearchDropdown] = useState(false);
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
